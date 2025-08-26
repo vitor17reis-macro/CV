@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Menu, X, Moon, Sun, Download, Mail, Linkedin, Github, FileText, Newspaper, User, Globe } from "lucide-react";
 
 // ==========================
-// Economista — Website Base (PT/EN)
+// Economista — Website Base (PT/EN) — Consolidado
 // ==========================
 
 // --- Configurações e links ---
@@ -39,7 +39,7 @@ const DICT = {
       title: "Economista — Vítor Reis",
       blurb:
         "Sou um economista focado em macroeconomia, política monetária e análise de dados. Partilho semanalmente reflexões sobre a Zona Euro, Portugal e tendências globais.",
-      downloadCV: "Download CV",
+      downloadCV: "Descarregar CV",
     },
     about: { title: "Sobre mim" },
     aboutText:
@@ -56,13 +56,33 @@ const DICT = {
         "Erasmus+ — Universidade Autónoma de Madrid (2021–2022)",
       ],
       expItems: [
-        "Administrative Assistant — Ibermetais (Mar. 2023 – Set. 2023). Apoio à cadeia logística, controlo de stocks e departamento comercial.",
-        "Internship — M. Monteiro Serviços de Contabilidade (Jul. 2022). Apoio à contabilidade e organização administrativa.",
+        "Assistente Administrativo — Ibermetais (mar. 2023 – set. 2023). Apoio à logística, controlo de stocks e departamento comercial.",
+        "Estágio Curricular — M. Monteiro Serviços de Contabilidade (jul. 2022). Apoio à contabilidade e organização administrativa.",
+      ],
+      skillItems: [
+        "Stata, Excel, Word",
+        "Econometria aplicada, Análise de dados",
+        "Raciocínio rápido, foco em resultados",
       ],
     },
-    posts: { title: "Análises Semanais", empty: "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.", readMore: "Ler mais" },
-    contact: { title: "Contacto", name: "Nome", email: "Email", message: "Mensagem", placeholderName: "O seu nome", placeholderEmail: "nome@exemplo.pt", placeholderMsg: "Escreva a sua mensagem", send: "Enviar", orEmail: "ou enviar por email" },
+    posts: {
+      title: "Análises Semanais",
+      empty: "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.",
+      readMore: "Ler mais",
+    },
+    contact: {
+      title: "Contacto",
+      name: "Nome",
+      email: "Email",
+      message: "Mensagem",
+      placeholderName: "O seu nome",
+      placeholderEmail: "nome@exemplo.pt",
+      placeholderMsg: "Escreva a sua mensagem",
+      send: "Enviar",
+      orEmail: "ou enviar por email",
+    },
     footer: { top: "Topo", rights: "Todos os direitos reservados." },
+    ui: { theme: "Tema", language: "Idioma" },
     langLabel: "PT",
   },
   en: {
@@ -71,16 +91,16 @@ const DICT = {
     hero: {
       title: "Economist — Vítor Reis",
       blurb:
-        "I am a economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
+        "I am an economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
       downloadCV: "Download CV",
     },
     about: { title: "About me" },
     aboutText:
-      "I am 24 and known for discipline, proactivity and persistence. I am particularly interested in data analysis, financial economics, regulation and macroeconomic policy. I apply critical thinking and solid technical skills to interpret complex economic phenomena and contribute to practical, well‑grounded solutions.",
+      "I am 24 and known for discipline, proactivity and persistence. I am particularly interested in data analysis, financial economics, regulation and macroeconomic policy. I apply critical thinking and solid technical skills to interpret complex economic phenomena and contribute to practical, well-grounded solutions.",
     cv: {
       title: "CV",
       education: "Education",
-      experience: "Experience",
+      experience: "Professional Experience",
       skills: "Skills & Tools",
       languages: "Languages",
       eduItems: [
@@ -90,12 +110,32 @@ const DICT = {
       ],
       expItems: [
         "Administrative Assistant — Ibermetais (Mar 2023 – Sep 2023). Logistics support, inventory control and commercial department.",
-        "Internship — M. Monteiro Accounting Services (Jul 2022). Support to accounting and administrative organization.",
+        "Internship — M. Monteiro Accounting Services (Jul 2022). Support in accounting and administrative organisation.",
+      ],
+      skillItems: [
+        "Stata, Excel, Word",
+        "Applied econometrics, Data analysis",
+        "Fast reasoning, results oriented",
       ],
     },
-    posts: { title: "Weekly Analyses", empty: "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary and url.", readMore: "Read more" },
-    contact: { title: "Contact", name: "Name", email: "Email", message: "Message", placeholderName: "Your name", placeholderEmail: "name@example.com", placeholderMsg: "Write your message", send: "Send", orEmail: "or send by email" },
+    posts: {
+      title: "Weekly Analyses",
+      empty: "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary and url.",
+      readMore: "Read more",
+    },
+    contact: {
+      title: "Contact",
+      name: "Name",
+      email: "Email",
+      message: "Message",
+      placeholderName: "Your name",
+      placeholderEmail: "name@example.com",
+      placeholderMsg: "Write your message",
+      send: "Send",
+      orEmail: "or send by email",
+    },
     footer: { top: "Top", rights: "All rights reserved." },
+    ui: { theme: "Theme", language: "Language" },
     langLabel: "EN",
   },
 };
@@ -117,6 +157,7 @@ const Section = ({ id, title, icon: Icon, children, altBg = false }) => (
   </section>
 );
 
+// Tema (dark/light) com persistência
 function useTheme() {
   const [dark, setDark] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -133,6 +174,7 @@ function useTheme() {
   return { dark, setDark };
 }
 
+// I18n simples
 function useI18n() {
   const [lang, setLang] = useState(() => localStorage.getItem("lang") || "pt");
   useEffect(() => { localStorage.setItem("lang", lang); }, [lang]);
@@ -143,7 +185,73 @@ function useI18n() {
   return { lang, setLang, t };
 }
 
-const Nav = ({ onToggleTheme, dark, lang, setLang, t }) => {
+// SEO e html lang dinâmicos
+function useHtmlLang(lang) {
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = "ltr";
+  }, [lang]);
+}
+function useSeo(lang, t) {
+  useEffect(() => {
+    const title = t("brand");
+    const desc =
+      lang === "pt"
+        ? "Economista especializado em macroeconomia, política monetária e análise de dados. Análises semanais sobre a Zona Euro, Portugal e tendências globais."
+        : "Economist focused on macroeconomics, monetary policy and data analysis. Weekly insights on the Euro Area, Portugal and global trends.";
+
+    document.title = title;
+
+    const ensure = (name, content) => {
+      let el = document.querySelector(`meta[name="${name}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute("name", name);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+    const ensureOG = (prop, content) => {
+      let el = document.querySelector(`meta[property="${prop}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute("property", prop);
+        document.head.appendChild(el);
+      }
+      el.setAttribute("content", content);
+    };
+
+    ensure("description", desc);
+    ensureOG("og:title", title);
+    ensureOG("og:description", desc);
+    ensureOG("og:type", "website");
+  }, [lang, t]);
+}
+
+// Realce do link ativo na navegação
+function useActiveSection() {
+  const [active, setActive] = useState("#sobre");
+  useEffect(() => {
+    const handler = () => {
+      const sections = ["#sobre", "#cv", "#analises", "#contacto"];
+      let curr = "#sobre";
+      for (const id of sections) {
+        const el = document.querySelector(id);
+        if (el) {
+          const top = el.getBoundingClientRect().top;
+          if (top <= 120) curr = id;
+        }
+      }
+      setActive(curr);
+    };
+    handler();
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
+  return active;
+}
+
+const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
   const [open, setOpen] = useState(false);
   const navItems = [
     { href: "#sobre", label: t("nav.sobre") },
@@ -161,17 +269,38 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t }) => {
           <nav className="hidden md:flex items-center gap-3">
             <ul className="flex items-center gap-6">
               {navItems.map((i) => (
-                <li key={i.href}><a href={i.href} className="hover:underline underline-offset-4">{i.label}</a></li>
+                <li key={i.href}>
+                  <a
+                    href={i.href}
+                    className={`hover:underline underline-offset-4 ${active === i.href ? "font-semibold" : ""}`}
+                  >
+                    {i.label}
+                  </a>
+                </li>
               ))}
             </ul>
-            <button onClick={onToggleTheme} aria-label="Alternar tema" className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+            <button
+              onClick={onToggleTheme}
+              aria-label={t("ui.theme")}
+              className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
               {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <button onClick={toggleLang} aria-label="Mudar idioma" className="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 text-sm transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800">
+            <button
+              onClick={toggleLang}
+              aria-label={t("ui.language")}
+              className="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 text-sm transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
               {DICT[lang].langLabel}
             </button>
           </nav>
-          <button className="md:hidden p-2" onClick={() => setOpen((o) => !o)} aria-label="Menu">{open ? <X /> : <Menu />}</button>
+          <button
+            className="md:hidden p-2"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Menu"
+          >
+            {open ? <X /> : <Menu />}
+          </button>
         </div>
         {open && (
           <div className="md:hidden pb-4 flex flex-col gap-3">
@@ -179,10 +308,17 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t }) => {
               <a key={i.href} href={i.href} className="py-2 border-b border-neutral-200 dark:border-neutral-800">{i.label}</a>
             ))}
             <div className="flex gap-2">
-              <button onClick={onToggleTheme} className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800">
-                {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}<span>Theme</span>
+              <button
+                onClick={onToggleTheme}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              >
+                {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                <span>{t("ui.theme")}</span>
               </button>
-              <button onClick={() => setLang(lang === "pt" ? "en" : "pt")} className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800">
+              <button
+                onClick={() => setLang(lang === "pt" ? "en" : "pt")}
+                className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              >
                 <Globe className="w-4 h-4" /><span>{DICT[lang].langLabel}</span>
               </button>
             </div>
@@ -194,7 +330,9 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t }) => {
 };
 
 const Card = ({ children }) => (
-  <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-lg transition-shadow bg-white dark:bg-neutral-950">{children}</div>
+  <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-lg transition-shadow bg-white dark:bg-neutral-950">
+    {children}
+  </div>
 );
 
 const Hero = ({ t }) => (
@@ -205,13 +343,22 @@ const Hero = ({ t }) => (
           <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-blue-700 dark:text-blue-400">{t("hero.title")}</h1>
           <p className="mt-4 text-neutral-700 dark:text-neutral-300">{t("hero.blurb")}</p>
           <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-            <a href={links.cv} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+            <a
+              href={links.cv}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
               <Download className="w-4 h-4" /> {t("hero.downloadCV")}
             </a>
-            <a href={links.linkedin} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+            <a
+              href={links.linkedin}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
               <Linkedin className="w-4 h-4" /> LinkedIn
             </a>
-            <a href={links.github} className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors">
+            <a
+              href={links.github}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
               <Github className="w-4 h-4" /> GitHub
             </a>
           </div>
@@ -239,9 +386,7 @@ const SecCV = ({ t }) => (
       <Card>
         <h3 className="font-medium">{t("cv.skills")}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          <li>Stata, Excel, Word</li>
-          <li>Econometria aplicada, Análise de dados</li>
-          <li>Quick thinking, foco em resultados</li>
+          {t("cv.skillItems").map((item) => (<li key={item}>{item}</li>))}
         </ul>
       </Card>
       <Card>
@@ -295,8 +440,15 @@ const SecContacto = ({ t }) => (
           <textarea rows={5} className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder={t("contact.placeholderMsg")} />
         </div>
         <div className="md:col-span-2 flex items-center gap-3">
-          <button type="button" className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors">{t("contact.send")}</button>
-          <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4"><Mail className="w-4 h-4"/> {t("contact.orEmail")}</a>
+          <button
+            type="button"
+            className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+          >
+            {t("contact.send")}
+          </button>
+          <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4">
+            <Mail className="w-4 h-4"/> {t("contact.orEmail")}
+          </a>
         </div>
       </form>
     </Card>
@@ -326,11 +478,51 @@ const Footer = ({ t }) => (
 export default function EconomistaSiteBase() {
   const { dark, setDark } = useTheme();
   const { lang, setLang, t } = useI18n();
+  const active = useActiveSection();
+
+  useHtmlLang(lang);
+  useSeo(lang, t);
+
   return (
     <div className="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
-      <Nav onToggleTheme={() => setDark((d) => !d)} dark={dark} lang={lang} setLang={setLang} t={t} />
-      <main>
+      {/* Skip to content (acessibilidade) */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-neutral-900 text-white px-3 py-2 rounded"
+      >
+        Saltar para o conteúdo
+      </a>
+
+      <Nav
+        onToggleTheme={() => setDark((d) => !d)}
+        dark={dark}
+        lang={lang}
+        setLang={setLang}
+        t={t}
+        active={active}
+      />
+
+      <main id="main">
         <Hero t={t} />
+        <Section id="sobre" title={t("about.title")} icon={User}>
+          <Container>
+            <Card>
+              <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">
+                {t("aboutText")}
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {skills.map((s) => (
+                  <span
+                    key={s}
+                    className="text-xs px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800"
+                  >
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </Card>
+          </Container>
+        </Section>
         <SecCV t={t} />
         <SecAnalises t={t} />
         <SecContacto t={t} />
