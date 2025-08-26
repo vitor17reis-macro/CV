@@ -38,7 +38,7 @@ const DICT = {
     hero: {
       title: "Economista — Vítor Reis",
       blurb:
-        "Sou um jovem economista focado em macroeconomia, política monetária e análise de dados. Partilho semanalmente reflexões sobre a Zona Euro, Portugal e tendências globais.",
+        "Sou um economista focado em macroeconomia, política monetária e análise de dados. Partilho semanalmente reflexões sobre a Zona Euro, Portugal e tendências globais.",
       downloadCV: "Download CV",
     },
     about: { title: "Sobre mim" },
@@ -71,7 +71,7 @@ const DICT = {
     hero: {
       title: "Economist — Vítor Reis",
       blurb:
-        "I am a young economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
+        "I am a economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
       downloadCV: "Download CV",
     },
     about: { title: "About me" },
