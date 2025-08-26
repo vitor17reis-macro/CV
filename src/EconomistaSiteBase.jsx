@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { Menu, X, Moon, Sun, Download, Mail, Linkedin, Github, FileText, Newspaper, User, Globe } from "lucide-react";
 
-// --- Links pessoais ---
+// ==========================
+// Economista — Website Base
+// ==========================
+
+// --- Links pessoais (substituir) ---
 const links = {
   email: "mailto:vitor17reis@gmail.com",
   linkedin: "https://www.linkedin.com/in/vítor-reis",
-  github: "https://github.com/seu-utilizador",
-  cv: "/cv.pdf",
+  github: "https://github.com/vitor17reis-macro",
+  cv: "/cv.pdf", // Link direto para o PDF do CV
 };
 
-// --- Estado inicial dos artigos (vazio) ---
+// --- Estado inicial dos artigos (vazio por defeito) ---
 const posts = [];
 
-// --- Competências ---
+// --- Competências (baseado no CV) ---
 const skills = [
   "Data Analysis (Stata, Excel)",
   "Macroeconomia & Regulação Financeira",
@@ -29,6 +33,7 @@ const languages = [
   { name: "Espanhol", level: "B1" },
 ];
 
+// --- Componentes utilitários ---
 const Container = ({ children }) => (
   <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
 );
@@ -101,10 +106,12 @@ const Nav = ({ onToggleTheme, dark }) => {
   );
 };
 
+// --- Cartões ---
 const Card = ({ children }) => (
   <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-sm transition-shadow">{children}</div>
 );
 
+// --- Secções ---
 const Hero = () => (
   <section className="pt-10 pb-8 bg-gradient-to-b from-white to-neutral-50 dark:from-neutral-950 dark:to-neutral-900">
     <Container>
@@ -127,7 +134,7 @@ const Hero = () => (
         <Card>
           <h3 className="font-medium flex items-center gap-2"><User className="w-4 h-4"/>Sobre mim</h3>
           <p className="mt-3 text-sm leading-6 text-neutral-700 dark:text-neutral-300">
-            Tenho 20 anos, sou disciplinado, proativo e persistente. Interesso-me por análise de dados, economia financeira, regulação e política macroeconómica. Procuro aplicar pensamento crítico e competências técnicas para interpretar fenómenos económicos e contribuir para soluções práticas.
+            Tenho 24 anos e destaco-me pela disciplina, proatividade e persistência. Tenho particular interesse em análise de dados, economia financeira, regulação e política macroeconómica. Procuro aplicar um pensamento crítico e competências técnicas sólidas para interpretar fenómenos económicos complexos e contribuir para soluções práticas e fundamentadas.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {skills.map((s) => (
@@ -159,7 +166,7 @@ const SecCV = () => (
         </ul>
       </Card>
       <Card>
-        <h3 className="font-medium">Competências & Ferramentas</h3>
+        <h3 className="font-medium">Competências &amp; Ferramentas</h3>
         <ul className="mt-3 space-y-2 text-sm">
           <li>Stata, Excel, Word</li>
           <li>Econometria aplicada, Análise de dados</li>
@@ -182,18 +189,66 @@ const SecAnalises = () => (
   <Section id="analises" title="Análises Semanais" icon={Newspaper}>
     {posts.length === 0 ? (
       <Card>
-        <p className="text-sm text-neutral-600 dark:text-neutral-300">Ainda não há artigos publicados.</p>
+        <p className="text-sm text-neutral-600 dark:text-neutral-300">Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.</p>
       </Card>
-    ) : null}
+    ) : (
+      <div className="grid gap-6 md:grid-cols-2">
+        {posts.map((p) => (
+          <Card key={p.id}>
+            <div className="text-xs text-neutral-500">{p.date}</div>
+            <h3 className="mt-1 font-medium leading-snug">{p.title}</h3>
+            <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">{p.summary}</p>
+            <a href={p.url} className="mt-3 inline-flex text-sm underline underline-offset-4">Ler mais</a>
+          </Card>
+        ))}
+      </div>
+    )}
   </Section>
 );
 
 const SecContacto = () => (
   <Section id="contacto" title="Contacto" icon={Mail}>
     <Card>
-      <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4"><Mail className="w-4 h-4"/> vitor17reis@gmail.com</a>
+      <form className="grid gap-4 md:grid-cols-2">
+        <div className="md:col-span-1">
+          <label className="block text-sm mb-1">Nome</label>
+          <input className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder="O seu nome" />
+        </div>
+        <div className="md:col-span-1">
+          <label className="block text-sm mb-1">Email</label>
+          <input type="email" className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder="nome@exemplo.pt" />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-sm mb-1">Mensagem</label>
+          <textarea rows={5} className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder="Escreva a sua mensagem" />
+        </div>
+        <div className="md:col-span-2 flex items-center gap-3">
+          <button type="button" className="px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700">Enviar</button>
+          <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4"><Mail className="w-4 h-4"/> ou enviar por email</a>
+        </div>
+      </form>
     </Card>
+    <div className="mt-4 flex items-center gap-4 text-sm">
+      <a href={links.linkedin} className="underline underline-offset-4">LinkedIn</a>
+      <a href={links.github} className="underline underline-offset-4">GitHub</a>
+      <a href={links.email} className="underline underline-offset-4">Email</a>
+    </div>
   </Section>
+);
+
+const Footer = () => (
+  <footer className="py-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-600 dark:text-neutral-400">
+    <Container>
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+        <div>© {new Date().getFullYear()} Vítor Reis. Todos os direitos reservados.</div>
+        <div className="flex items-center gap-4">
+          <a href="#sobre" className="underline underline-offset-4">Topo</a>
+          <a href="#analises" className="underline underline-offset-4">Análises</a>
+          <a href="#contacto" className="underline underline-offset-4">Contacto</a>
+        </div>
+      </div>
+    </Container>
+  </footer>
 );
 
 export default function EconomistaSiteBase() {
@@ -204,11 +259,19 @@ export default function EconomistaSiteBase() {
       <main>
         <Hero />
         <Container>
+          <Section id="sobre" title="Sobre" icon={User}>
+            <Card>
+              <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">
+                Sou um jovem economista com formação pela Universidade de Coimbra e atualmente a frequentar o Mestrado em Economia na FEP, Universidade do Porto. Tenho experiência em contabilidade, logística e forte interesse em análise macroeconómica e política monetária. Procuro aplicar competências técnicas e pensamento crítico para compreender fenómenos económicos e comunicar de forma clara os seus impactos.
+              </p>
+            </Card>
+          </Section>
           <SecCV />
           <SecAnalises />
           <SecContacto />
         </Container>
       </main>
+      <Footer />
     </div>
   );
 }
