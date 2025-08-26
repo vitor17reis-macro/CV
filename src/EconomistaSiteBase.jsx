@@ -1,9 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { Menu, X, Moon, Sun, Download, Mail, Linkedin, Github, FileText, Newspaper, User, Globe } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import {
+  Menu,
+  X,
+  Moon,
+  Sun,
+  Download,
+  Mail,
+  Linkedin,
+  Github,
+  FileText,
+  Newspaper,
+  User,
+  Globe,
+} from "lucide-react";
 
 // ==========================
-// Economista — Website Base (PT/EN) — Consolidado
+// Economista — Website Base (PT/EN) — PRONTO A COLAR
 // ==========================
+// Melhorias incluídas:
+// - SEO reforçado (title/description dinâmicos, OG/Twitter Cards, canonical, hreflang)
+// - JSON-LD (schema.org Person)
+// - I18N robusto (query ?lang, datas localizadas)
+// - A11y (aria-current, labels/ids, focus ring consistente)
+// - UX (CTA extra, nav com indicador ativo, micro-anim, contraste)
+// - Contact form com validação client-side + honeypot + fallback mailto
+// - Estrutura de posts bi‑idioma com tags e ordenação
+// - Pequenas otimizações (debounce scroll, links externos seguros)
 
 // --- Configurações e links ---
 const links = {
@@ -11,9 +33,27 @@ const links = {
   linkedin: "https://www.linkedin.com/in/vítor-reis",
   github: "https://github.com/vitor17reis-macro",
   cv: "/cv.pdf",
+  siteOrigin: typeof window !== "undefined" ? window.location.origin : "",
 };
 
-const posts = [];
+// Exemplo de posts (apaga/ajusta à vontade)
+const postsBase = [
+  {
+    id: "ecb-aug25",
+    isoDate: "2025-08-20",
+    title: {
+      pt: "BCE: leituras de agosto e implicações para a ZE",
+      en: "ECB: August read‑out and Euro Area implications",
+    },
+    summary: {
+      pt: "Notas rápidas sobre a orientação de política, inflação subjacente e condições financeiras, com foco nos canais de crédito e expectativas.",
+      en: "Quick notes on policy stance, core inflation and financial conditions, focusing on credit channels and expectations.",
+    },
+    url: "/analises/ecb-aug25",
+    tags: ["ZE", "BCE"],
+    lang: "pt",
+  },
+];
 
 const skills = [
   "Data Analysis (Stata, Excel)",
@@ -40,6 +80,15 @@ const DICT = {
       blurb:
         "Sou um economista focado em macroeconomia, política monetária e análise de dados. Partilho semanalmente reflexões sobre a Zona Euro, Portugal e tendências globais.",
       downloadCV: "Descarregar CV",
+      viewAnalyses: "Ver análises",
+    },
+    highlights: {
+      title: "Destaques",
+      items: [
+        "Macroeconomia e política monetária da ZE",
+        "PLS‑SEM / FAVAR com foco em transmissão e heterogeneidade",
+        "Dashboards e análise aplicada orientada para decisão",
+      ],
     },
     about: { title: "Sobre mim" },
     aboutText:
@@ -67,7 +116,8 @@ const DICT = {
     },
     posts: {
       title: "Análises Semanais",
-      empty: "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.",
+      empty:
+        "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.",
       readMore: "Ler mais",
     },
     contact: {
@@ -80,6 +130,8 @@ const DICT = {
       placeholderMsg: "Escreva a sua mensagem",
       send: "Enviar",
       orEmail: "ou enviar por email",
+      sentOk: "Mensagem pronta para envio!",
+      sentError: "Por favor, preencha todos os campos obrigatórios.",
     },
     footer: { top: "Topo", rights: "Todos os direitos reservados." },
     ui: { theme: "Tema", language: "Idioma" },
@@ -93,6 +145,15 @@ const DICT = {
       blurb:
         "I am an economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
       downloadCV: "Download CV",
+      viewAnalyses: "View analyses",
+    },
+    highlights: {
+      title: "Highlights",
+      items: [
+        "Euro Area macro and monetary policy",
+        "PLS‑SEM / FAVAR on transmission and heterogeneity",
+        "Decision‑oriented dashboards and applied analysis",
+      ],
     },
     about: { title: "About me" },
     aboutText:
@@ -120,7 +181,8 @@ const DICT = {
     },
     posts: {
       title: "Weekly Analyses",
-      empty: "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary and url.",
+      empty:
+        "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary and url.",
       readMore: "Read more",
     },
     contact: {
@@ -133,6 +195,8 @@ const DICT = {
       placeholderMsg: "Write your message",
       send: "Send",
       orEmail: "or send by email",
+      sentOk: "Message ready to send!",
+      sentError: "Please fill in all required fields.",
     },
     footer: { top: "Top", rights: "All rights reserved." },
     ui: { theme: "Theme", language: "Language" },
@@ -157,27 +221,59 @@ const Section = ({ id, title, icon: Icon, children, altBg = false }) => (
   </section>
 );
 
-// Tema (dark/light) com persistência
-function useTheme() {
-  const [dark, setDark] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return (
-      localStorage.getItem("theme") === "dark" ||
-      (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
+const Card = ({ children }) => (
+  <div className="rounded-2xl border border-neutral-200 dark:border-neutral-700 p-6 bg-white dark:bg-neutral-950 transition-[box-shadow,transform] motion-reduce:transition-none hover:shadow-lg hover:-translate-y-0.5">
+    {children}
+  </div>
+);
+
+// Hooks utilitários
+function useLocalStorage(key, initial) {
+  const [value, setValue] = useState(() => {
+    try {
+      const v = localStorage.getItem(key);
+      return v ? JSON.parse(v) : initial;
+    } catch {
+      return initial;
+    }
   });
   useEffect(() => {
-    const root = window.document.documentElement;
-    if (dark) { root.classList.add("dark"); localStorage.setItem("theme", "dark"); }
-    else { root.classList.remove("dark"); localStorage.setItem("theme", "light"); }
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {}
+  }, [key, value]);
+  return [value, setValue];
+}
+
+// Tema (dark/light) com persistência
+function useTheme() {
+  const prefersDark =
+    typeof window !== "undefined" &&
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const [dark, setDark] = useLocalStorage("theme_dark", prefersDark);
+  useEffect(() => {
+    const root = document.documentElement;
+    if (dark) root.classList.add("dark");
+    else root.classList.remove("dark");
   }, [dark]);
   return { dark, setDark };
 }
 
 // I18n simples
 function useI18n() {
-  const [lang, setLang] = useState(() => localStorage.getItem("lang") || "pt");
-  useEffect(() => { localStorage.setItem("lang", lang); }, [lang]);
+  const getInitial = () => {
+    try {
+      const p = new URLSearchParams(window.location.search).get("lang");
+      if (p === "pt" || p === "en") return p;
+    } catch {}
+    try {
+      const v = localStorage.getItem("lang");
+      if (v) return v;
+    } catch {}
+    return "pt";
+  };
+  const [lang, setLang] = useLocalStorage("lang", getInitial());
   const t = (path) => {
     const parts = path.split(".");
     return parts.reduce((acc, p) => (acc ? acc[p] : undefined), DICT[lang]) ?? path;
@@ -192,6 +288,39 @@ function useHtmlLang(lang) {
     document.documentElement.dir = "ltr";
   }, [lang]);
 }
+
+function ensureMetaName(name, content) {
+  let el = document.querySelector(`meta[name="${name}"]`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute("name", name);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+}
+
+function ensureMetaProp(prop, content) {
+  let el = document.querySelector(`meta[property="${prop}"]`);
+  if (!el) {
+    el = document.createElement("meta");
+    el.setAttribute("property", prop);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("content", content);
+}
+
+function ensureLink(rel, href, hreflang) {
+  const sel = `link[rel="${rel}"]${hreflang ? `[hreflang="${hreflang}"]` : ""}`;
+  let el = document.head.querySelector(sel);
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", rel);
+    if (hreflang) el.setAttribute("hreflang", hreflang);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+}
+
 function useSeo(lang, t) {
   useEffect(() => {
     const title = t("brand");
@@ -202,53 +331,85 @@ function useSeo(lang, t) {
 
     document.title = title;
 
-    const ensure = (name, content) => {
-      let el = document.querySelector(`meta[name="${name}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute("name", name);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
-    const ensureOG = (prop, content) => {
-      let el = document.querySelector(`meta[property="${prop}"]`);
-      if (!el) {
-        el = document.createElement("meta");
-        el.setAttribute("property", prop);
-        document.head.appendChild(el);
-      }
-      el.setAttribute("content", content);
-    };
+    ensureMetaName("description", desc);
+    ensureMetaProp("og:title", title);
+    ensureMetaProp("og:description", desc);
+    ensureMetaProp("og:type", "website");
+    ensureMetaProp("og:image", "/og.jpg");
+    ensureMetaName("twitter:card", "summary_large_image");
+    ensureMetaName("twitter:title", title);
+    ensureMetaName("twitter:description", desc);
 
-    ensure("description", desc);
-    ensureOG("og:title", title);
-    ensureOG("og:description", desc);
-    ensureOG("og:type", "website");
+    try {
+      const origin = window.location.origin;
+      ensureLink("canonical", origin + "/");
+      ensureLink("alternate", origin + "/?lang=pt", "pt");
+      ensureLink("alternate", origin + "/?lang=en", "en");
+    } catch {}
   }, [lang, t]);
 }
 
-// Realce do link ativo na navegação
+// JSON-LD Person
+function useJsonLdPerson(lang) {
+  useEffect(() => {
+    const data = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Vítor Reis",
+      url: typeof window !== "undefined" ? window.location.origin : "",
+      sameAs: [links.linkedin, links.github],
+      jobTitle: lang === "pt" ? "Economista" : "Economist",
+    };
+    let s = document.getElementById("ld-person");
+    if (!s) {
+      s = document.createElement("script");
+      s.id = "ld-person";
+      s.type = "application/ld+json";
+      document.head.appendChild(s);
+    }
+    s.textContent = JSON.stringify(data);
+  }, [lang]);
+}
+
+// Realce do link ativo na navegação (com debounce)
 function useActiveSection() {
   const [active, setActive] = useState("#sobre");
   useEffect(() => {
-    const handler = () => {
-      const sections = ["#sobre", "#cv", "#analises", "#contacto"];
+    const sections = ["#sobre", "#cv", "#analises", "#contacto"];
+    const onScroll = () => {
       let curr = "#sobre";
       for (const id of sections) {
         const el = document.querySelector(id);
-        if (el) {
-          const top = el.getBoundingClientRect().top;
-          if (top <= 120) curr = id;
-        }
+        if (!el) continue;
+        const top = el.getBoundingClientRect().top;
+        if (top <= 120) curr = id;
       }
       setActive(curr);
     };
-    handler();
+    let t;
+    const handler = () => {
+      clearTimeout(t);
+      t = setTimeout(onScroll, 80);
+    };
+    onScroll();
     window.addEventListener("scroll", handler, { passive: true });
-    return () => window.removeEventListener("scroll", handler);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener("scroll", handler);
+    };
   }, []);
   return active;
+}
+
+// Util: formata datas localizadas
+function fmtDate(iso, lang) {
+  try {
+    return new Intl.DateTimeFormat(lang === "pt" ? "pt-PT" : "en-GB", {
+      dateStyle: "medium",
+    }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
 }
 
 const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
@@ -265,16 +426,22 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
     <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-neutral-900/70 border-b border-neutral-200 dark:border-neutral-800">
       <Container>
         <div className="flex items-center justify-between h-16">
-          <a href="#" className="font-semibold tracking-tight">{t("hero.title")}</a>
+          <a href="#" className="font-semibold tracking-tight">
+            {t("hero.title")}
+          </a>
           <nav className="hidden md:flex items-center gap-3">
             <ul className="flex items-center gap-6">
               {navItems.map((i) => (
                 <li key={i.href}>
                   <a
                     href={i.href}
-                    className={`hover:underline underline-offset-4 ${active === i.href ? "font-semibold" : ""}`}
+                    aria-current={active === i.href ? "page" : undefined}
+                    className={`relative hover:underline underline-offset-4 ${active === i.href ? "font-semibold" : ""}`}
                   >
                     {i.label}
+                    {active === i.href && (
+                      <span className="absolute -bottom-2 left-0 h-0.5 w-full bg-blue-600 rounded-full" />
+                    )}
                   </a>
                 </li>
               ))}
@@ -284,7 +451,7 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
               aria-label={t("ui.theme")}
               className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
-              {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {dark ? <Sun className="w-4 h-4" aria-hidden /> : <Moon className="w-4 h-4" aria-hidden />}
             </button>
             <button
               onClick={toggleLang}
@@ -294,32 +461,31 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
               {DICT[lang].langLabel}
             </button>
           </nav>
-          <button
-            className="md:hidden p-2"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Menu"
-          >
-            {open ? <X /> : <Menu />}
+          <button className="md:hidden p-2" onClick={() => setOpen((o) => !o)} aria-label="Menu">
+            {open ? <X aria-hidden /> : <Menu aria-hidden />}
           </button>
         </div>
         {open && (
           <div className="md:hidden pb-4 flex flex-col gap-3">
             {navItems.map((i) => (
-              <a key={i.href} href={i.href} className="py-2 border-b border-neutral-200 dark:border-neutral-800">{i.label}</a>
+              <a key={i.href} href={i.href} className="py-2 border-b border-neutral-200 dark:border-neutral-800">
+                {i.label}
+              </a>
             ))}
             <div className="flex gap-2">
               <button
                 onClick={onToggleTheme}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
               >
-                {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {dark ? <Sun className="w-4 h-4" aria-hidden /> : <Moon className="w-4 h-4" aria-hidden />}
                 <span>{t("ui.theme")}</span>
               </button>
               <button
                 onClick={() => setLang(lang === "pt" ? "en" : "pt")}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
               >
-                <Globe className="w-4 h-4" /><span>{DICT[lang].langLabel}</span>
+                <Globe className="w-4 h-4" aria-hidden />
+                <span>{DICT[lang].langLabel}</span>
               </button>
             </div>
           </div>
@@ -329,37 +495,45 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
   );
 };
 
-const Card = ({ children }) => (
-  <div className="rounded-2xl border border-neutral-200 dark:border-neutral-800 p-6 hover:shadow-lg transition-shadow bg-white dark:bg-neutral-950">
-    {children}
-  </div>
-);
-
 const Hero = ({ t }) => (
   <section className="pt-10 pb-8 bg-gradient-to-b from-blue-50 to-white dark:from-neutral-950 dark:to-neutral-900">
     <Container>
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div className="text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-blue-700 dark:text-blue-400">{t("hero.title")}</h1>
-          <p className="mt-4 text-neutral-700 dark:text-neutral-300">{t("hero.blurb")}</p>
+          <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-blue-700 dark:text-blue-400">
+            {t("hero.title")}
+          </h1>
+          <p className="mt-4 text-neutral-700 dark:text-neutral-200">{t("hero.blurb")}</p>
           <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
             <a
               href={links.cv}
+              download
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              rel="nofollow noopener"
             >
-              <Download className="w-4 h-4" /> {t("hero.downloadCV")}
+              <Download className="w-4 h-4" aria-hidden /> {t("hero.downloadCV")}
+            </a>
+            <a
+              href="#analises"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
+              <Newspaper className="w-4 h-4" aria-hidden /> {t("hero.viewAnalyses")}
             </a>
             <a
               href={links.linkedin}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
-              <Linkedin className="w-4 h-4" /> LinkedIn
+              <Linkedin className="w-4 h-4" aria-hidden /> LinkedIn
             </a>
             <a
               href={links.github}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              target="_blank"
+              rel="me noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
-              <Github className="w-4 h-4" /> GitHub
+              <Github className="w-4 h-4" aria-hidden /> GitHub
             </a>
           </div>
         </div>
@@ -368,32 +542,56 @@ const Hero = ({ t }) => (
   </section>
 );
 
+const SecHighlights = ({ t }) => (
+  <Section id="destaques" title={t("highlights.title")} icon={Newspaper}>
+    <div className="grid md:grid-cols-3 gap-6">
+      {t("highlights.items").map((item) => (
+        <Card key={item}>
+          <p className="text-sm text-neutral-700 dark:text-neutral-200">{item}</p>
+        </Card>
+      ))}
+    </div>
+  </Section>
+);
+
 const SecCV = ({ t }) => (
   <Section id="cv" title={t("cv.title")} icon={FileText} altBg>
     <div className="grid md:grid-cols-3 gap-6">
       <Card>
         <h3 className="font-medium">{t("cv.education")}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          {t("cv.eduItems").map((item) => (<li key={item}>{item}</li>))}
+          {t("cv.eduItems").map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </Card>
       <Card>
         <h3 className="font-medium">{t("cv.experience")}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          {t("cv.expItems").map((item) => (<li key={item}>{item}</li>))}
+          {t("cv.expItems").map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </Card>
       <Card>
         <h3 className="font-medium">{t("cv.skills")}</h3>
         <ul className="mt-3 space-y-2 text-sm">
-          {t("cv.skillItems").map((item) => (<li key={item}>{item}</li>))}
+          {t("cv.skillItems").map((item) => (
+            <li key={item}>{item}</li>
+          ))}
         </ul>
       </Card>
       <Card>
-        <h3 className="font-medium flex items-center gap-2"><Globe className="w-4 h-4"/>{t("cv.languages")}</h3>
+        <h3 className="font-medium flex items-center gap-2">
+          <Globe className="w-4 h-4" aria-hidden />
+          {t("cv.languages")}
+        </h3>
         <ul className="mt-3 space-y-2 text-sm">
           {languagesList.map((lang) => (
-            <li key={lang.name} className="flex justify-between border-b border-neutral-200 dark:border-neutral-800 pb-1">
+            <li
+              key={lang.name}
+              className="flex justify-between border-b border-neutral-200 dark:border-neutral-800 pb-1"
+            >
               <span>{lang.name}</span>
               <span className="text-neutral-500">{lang.level}</span>
             </li>
@@ -404,18 +602,45 @@ const SecCV = ({ t }) => (
   </Section>
 );
 
-const SecAnalises = ({ t }) => (
+const SecAnalises = ({ t, lang, posts }) => (
   <Section id="analises" title={t("posts.title")} icon={Newspaper} altBg>
     {posts.length === 0 ? (
-      <Card><p className="text-sm text-neutral-600 dark:text-neutral-300">{t("posts.empty")}</p></Card>
+      <Card>
+        <p className="text-sm text-neutral-700 dark:text-neutral-200">{t("posts.empty")}</p>
+      </Card>
     ) : (
       <div className="grid gap-6 md:grid-cols-2">
         {posts.map((p) => (
           <Card key={p.id}>
-            <div className="text-xs text-neutral-500">{p.date}</div>
-            <h3 className="mt-1 font-medium leading-snug">{p.title}</h3>
-            <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-300">{p.summary}</p>
-            <a href={p.url} className="mt-3 inline-flex text-sm underline underline-offset-4">{t("posts.readMore")}</a>
+            <div className="flex items-center gap-2 text-xs text-neutral-500">
+              <time dateTime={p.isoDate}>{fmtDate(p.isoDate, lang)}</time>
+              {p.tags?.length > 0 && (
+                <span className="px-2 py-0.5 rounded-full border border-neutral-200 dark:border-neutral-800">
+                  {p.tags[0]}
+                </span>
+              )}
+              {p.lang && (
+                <span className="px-2 py-0.5 rounded-full border border-neutral-200 dark:border-neutral-800">
+                  {p.lang.toUpperCase()}
+                </span>
+              )}
+            </div>
+            <h3 className="mt-2 font-medium leading-snug">
+              {typeof p.title === "string" ? p.title : p.title[lang] || p.title.pt || p.title.en}
+            </h3>
+            <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-200">
+              {typeof p.summary === "string"
+                ? p.summary
+                : p.summary[lang] || p.summary.pt || p.summary.en}
+            </p>
+            <a
+              href={p.url}
+              className="mt-3 inline-flex text-sm underline underline-offset-4"
+              target={p.url?.startsWith("http") ? "_blank" : undefined}
+              rel={p.url?.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              {t("posts.readMore")}
+            </a>
           </Card>
         ))}
       </div>
@@ -423,52 +648,137 @@ const SecAnalises = ({ t }) => (
   </Section>
 );
 
-const SecContacto = ({ t }) => (
-  <Section id="contacto" title={t("contact.title")} icon={Mail}>
-    <Card>
-      <form className="grid gap-4 md:grid-cols-2">
-        <div className="md:col-span-1">
-          <label className="block text-sm mb-1">{t("contact.name")}</label>
-          <input className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder={t("contact.placeholderName")} />
-        </div>
-        <div className="md:col-span-1">
-          <label className="block text-sm mb-1">{t("contact.email")}</label>
-          <input type="email" className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder={t("contact.placeholderEmail")} />
-        </div>
-        <div className="md:col-span-2">
-          <label className="block text-sm mb-1">{t("contact.message")}</label>
-          <textarea rows={5} className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2" placeholder={t("contact.placeholderMsg")} />
-        </div>
-        <div className="md:col-span-2 flex items-center gap-3">
-          <button
-            type="button"
-            className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
-          >
-            {t("contact.send")}
-          </button>
-          <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4">
-            <Mail className="w-4 h-4"/> {t("contact.orEmail")}
-          </a>
-        </div>
-      </form>
-    </Card>
-    <div className="mt-4 flex items-center gap-4 text-sm">
-      <a href={links.linkedin} className="underline underline-offset-4">LinkedIn</a>
-      <a href={links.github} className="underline underline-offset-4">GitHub</a>
-      <a href={links.email} className="underline underline-offset-4">Email</a>
-    </div>
-  </Section>
-);
+const SecContacto = ({ t, lang }) => {
+  const [form, setForm] = useState({ name: "", email: "", message: "", company: "" }); // company = honeypot
+  const [status, setStatus] = useState(null); // "ok" | "error" | null
+
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // honeypot
+    if (form.company) return; // provável bot
+
+    if (!form.name || !form.email || !form.message) {
+      setStatus("error");
+      return;
+    }
+    setStatus("ok");
+
+    // Fallback: abre mailto preenchido
+    const subject =
+      (lang === "pt" ? "Contacto via site — " : "Website contact — ") + form.name;
+    const body = `${form.message}\n\n— ${form.name}\n${form.email}`;
+    window.location.href = `mailto:vitor17reis@gmail.com?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+  };
+
+  return (
+    <Section id="contacto" title={t("contact.title")} icon={Mail}>
+      <Card>
+        <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit} noValidate aria-live="polite">
+          <div className="md:col-span-1">
+            <label htmlFor="name" className="block text-sm mb-1">
+              {t("contact.name")}
+            </label>
+            <input
+              id="name"
+              name="name"
+              required
+              aria-invalid={status === "error" && !form.name ? true : undefined}
+              className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={t("contact.placeholderName")}
+              value={form.name}
+              onChange={onChange}
+            />
+          </div>
+          <div className="md:col-span-1">
+            <label htmlFor="email" className="block text-sm mb-1">
+              {t("contact.email")}
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              required
+              aria-invalid={status === "error" && !form.email ? true : undefined}
+              className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={t("contact.placeholderEmail")}
+              value={form.email}
+              onChange={onChange}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <label htmlFor="message" className="block text-sm mb-1">
+              {t("contact.message")}
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows={5}
+              required
+              aria-invalid={status === "error" && !form.message ? true : undefined}
+              className="w-full rounded-xl border border-neutral-300 dark:border-neutral-700 bg-transparent px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={t("contact.placeholderMsg")}
+              value={form.message}
+              onChange={onChange}
+            />
+          </div>
+          {/* Honeypot */}
+          <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" value={form.company} onChange={onChange} />
+
+          <div className="md:col-span-2 flex items-center gap-3">
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+            >
+              {t("contact.send")}
+            </button>
+            <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4">
+              <Mail className="w-4 h-4" aria-hidden /> {t("contact.orEmail")}
+            </a>
+            {status === "ok" && (
+              <span className="text-sm text-green-600 dark:text-green-400">{t("contact.sentOk")}</span>
+            )}
+            {status === "error" && (
+              <span className="text-sm text-red-600 dark:text-red-400">{t("contact.sentError")}</span>
+            )}
+          </div>
+        </form>
+      </Card>
+      <div className="mt-4 flex items-center gap-4 text-sm">
+        <a href={links.linkedin} target="_blank" rel="me noopener noreferrer" className="underline underline-offset-4">
+          LinkedIn
+        </a>
+        <a href={links.github} target="_blank" rel="me noopener noreferrer" className="underline underline-offset-4">
+          GitHub
+        </a>
+        <a href={links.email} className="underline underline-offset-4">
+          Email
+        </a>
+      </div>
+    </Section>
+  );
+};
 
 const Footer = ({ t }) => (
-  <footer className="py-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-600 dark:text-neutral-400">
+  <footer className="py-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-700 dark:text-neutral-300">
     <Container>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
-        <div>© {new Date().getFullYear()} Vítor Reis. {t("footer.rights")}</div>
+        <div>
+          © {new Date().getFullYear()} Vítor Reis — Porto, PT. {t("footer.rights")}
+        </div>
         <div className="flex items-center gap-4">
-          <a href="#sobre" className="underline underline-offset-4">{t("footer.top")}</a>
-          <a href="#analises" className="underline underline-offset-4">{t("nav.analises")}</a>
-          <a href="#contacto" className="underline underline-offset-4">{t("nav.contacto")}</a>
+          <a href="#sobre" className="underline underline-offset-4">
+            {t("footer.top")}
+          </a>
+          <a href="#analises" className="underline underline-offset-4">
+            {t("nav.analises")}
+          </a>
+          <a href="#contacto" className="underline underline-offset-4">
+            {t("nav.contacto")}
+          </a>
         </div>
       </div>
     </Container>
@@ -482,6 +792,14 @@ export default function EconomistaSiteBase() {
 
   useHtmlLang(lang);
   useSeo(lang, t);
+  useJsonLdPerson(lang);
+
+  // Filtra posts conforme idioma com fallback
+  const posts = useMemo(() => {
+    const arr = postsBase.filter((p) => !p.lang || p.lang === lang);
+    // ordena por data desc
+    return arr.sort((a, b) => (a.isoDate < b.isoDate ? 1 : -1));
+  }, [lang]);
 
   return (
     <div className="min-h-screen bg-white text-neutral-900 dark:bg-neutral-950 dark:text-neutral-100">
@@ -490,26 +808,17 @@ export default function EconomistaSiteBase() {
         href="#main"
         className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-neutral-900 text-white px-3 py-2 rounded"
       >
-        Saltar para o conteúdo
+        {lang === "pt" ? "Saltar para o conteúdo" : "Skip to content"}
       </a>
 
-      <Nav
-        onToggleTheme={() => setDark((d) => !d)}
-        dark={dark}
-        lang={lang}
-        setLang={setLang}
-        t={t}
-        active={active}
-      />
+      <Nav onToggleTheme={() => setDark((d) => !d)} dark={dark} lang={lang} setLang={setLang} t={t} active={active} />
 
       <main id="main">
         <Hero t={t} />
         <Section id="sobre" title={t("about.title")} icon={User}>
           <Container>
             <Card>
-              <p className="text-sm leading-7 text-neutral-700 dark:text-neutral-300">
-                {t("aboutText")}
-              </p>
+              <p className="text-sm leading-7 text-neutral-800 dark:text-neutral-200">{t("aboutText")}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {skills.map((s) => (
                   <span
@@ -523,9 +832,10 @@ export default function EconomistaSiteBase() {
             </Card>
           </Container>
         </Section>
+        <SecHighlights t={t} />
         <SecCV t={t} />
-        <SecAnalises t={t} />
-        <SecContacto t={t} />
+        <SecAnalises t={t} lang={lang} posts={posts} />
+        <SecContacto t={t} lang={lang} />
       </main>
       <Footer t={t} />
     </div>
