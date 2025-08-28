@@ -29,21 +29,22 @@ const links = {
 // Exemplo de posts
 const postsBase = [
   {
-    id: "ecb-aug25",
-    isoDate: "2025-08-20",
+    id: "dxy-analise-2025",
+    isoDate: "2025-08-28",
     title: {
-      pt: "BCE: leituras de agosto e implicações para a ZE",
-      en: "ECB: August read-out and Euro Area implications",
+      pt: "Índice do Dólar Americano (DXY): Perspetivas e Riscos",
+      en: "US Dollar Index (DXY): Outlook and Risks",
     },
     summary: {
-      pt: "Notas rápidas sobre a orientação de política, inflação subjacente e condições financeiras, com foco nos canais de crédito e expectativas.",
-      en: "Quick notes on policy stance, core inflation and financial conditions, focusing on credit channels and expectations.",
+      pt: "Análise completa do DXY: enquadramento histórico, tendências técnicas, correlações com ouro e VIX, fatores fundamentais e riscos futuros.",
+      en: "Comprehensive analysis of the DXY: historical background, technical trends, correlations with gold and VIX, fundamentals and future risks.",
     },
-    url: "/analises/ecb-aug25",
-    tags: ["ZE", "BCE"],
+    url: "/analises/dxy-2025",
+    tags: ["DXY", "Macroeconomia"],
     lang: "pt",
   },
 ];
+
 
 const skills = [
   "Data Analysis (Stata, Excel)",
