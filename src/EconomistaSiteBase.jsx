@@ -15,19 +15,9 @@ import {
 } from "lucide-react";
 
 // ==========================
-// Economista — Website Base (PT/EN) — PRONTO A COLAR
+// Website — Vítor Reis — PRONTO A COLAR
 // ==========================
-// Melhorias incluídas:
-// - SEO reforçado (title/description dinâmicos, OG/Twitter Cards, canonical, hreflang)
-// - JSON-LD (schema.org Person)
-// - I18N robusto (query ?lang, datas localizadas)
-// - A11y (aria-current, labels/ids, focus ring consistente)
-// - UX (CTA extra, nav com indicador ativo, micro-anim, contraste)
-// - Contact form com validação client-side + honeypot + fallback mailto
-// - Estrutura de posts bi‑idioma com tags e ordenação
-// - Pequenas otimizações (debounce scroll, links externos seguros)
 
-// --- Configurações e links ---
 const links = {
   email: "mailto:vitor17reis@gmail.com",
   linkedin: "https://www.linkedin.com/in/vítor-reis",
@@ -36,14 +26,14 @@ const links = {
   siteOrigin: typeof window !== "undefined" ? window.location.origin : "",
 };
 
-// Exemplo de posts (apaga/ajusta à vontade)
+// Exemplo de posts
 const postsBase = [
   {
     id: "ecb-aug25",
     isoDate: "2025-08-20",
     title: {
       pt: "BCE: leituras de agosto e implicações para a ZE",
-      en: "ECB: August read‑out and Euro Area implications",
+      en: "ECB: August read-out and Euro Area implications",
     },
     summary: {
       pt: "Notas rápidas sobre a orientação de política, inflação subjacente e condições financeiras, com foco nos canais de crédito e expectativas.",
@@ -70,25 +60,17 @@ const languagesList = [
   { name: "Espanhol", level: "B1" },
 ];
 
-// --- I18N (dicionário simples) ---
+// --- I18N ---
 const DICT = {
   pt: {
-    brand: "Economista — Vítor Reis",
-    nav: { sobre: "Sobre", cv: "CV", analises: "Análises", contacto: "Contacto" },
+    brand: "Vítor Reis",
+    nav: { sobre: "Sobre", cv: "CV", analises: "Notas de Realidade", contacto: "Contacto" },
     hero: {
-      title: "Economista — Vítor Reis",
+      title: "Vítor Reis",
       blurb:
         "Sou um economista focado em macroeconomia, política monetária e análise de dados. Partilho semanalmente reflexões sobre a Zona Euro, Portugal e tendências globais.",
       downloadCV: "Descarregar CV",
-      viewAnalyses: "Ver análises",
-    },
-    highlights: {
-      title: "Destaques",
-      items: [
-        "Macroeconomia e política monetária da ZE",
-        "PLS‑SEM / FAVAR com foco em transmissão e heterogeneidade",
-        "Dashboards e análise aplicada orientada para decisão",
-      ],
+      viewAnalyses: "Ver notas",
     },
     about: { title: "Sobre mim" },
     aboutText:
@@ -115,7 +97,7 @@ const DICT = {
       ],
     },
     posts: {
-      title: "Análises Semanais",
+      title: "Notas de Realidade",
       empty:
         "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.",
       readMore: "Ler mais",
@@ -138,22 +120,14 @@ const DICT = {
     langLabel: "PT",
   },
   en: {
-    brand: "Economist — Vítor Reis",
-    nav: { sobre: "About", cv: "CV", analises: "Analyses", contacto: "Contact" },
+    brand: "Vítor Reis",
+    nav: { sobre: "About", cv: "CV", analises: "Reality Notes", contacto: "Contact" },
     hero: {
-      title: "Economist — Vítor Reis",
+      title: "Vítor Reis",
       blurb:
         "I am an economist focused on macroeconomics, monetary policy and data analysis. I publish weekly insights on the Euro Area, Portugal and global trends.",
       downloadCV: "Download CV",
-      viewAnalyses: "View analyses",
-    },
-    highlights: {
-      title: "Highlights",
-      items: [
-        "Euro Area macro and monetary policy",
-        "PLS‑SEM / FAVAR on transmission and heterogeneity",
-        "Decision‑oriented dashboards and applied analysis",
-      ],
+      viewAnalyses: "View notes",
     },
     about: { title: "About me" },
     aboutText:
@@ -180,7 +154,7 @@ const DICT = {
       ],
     },
     posts: {
-      title: "Weekly Analyses",
+      title: "Reality Notes",
       empty:
         "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary and url.",
       readMore: "Read more",
@@ -203,14 +177,16 @@ const DICT = {
     langLabel: "EN",
   },
 };
-
 // --- Helpers ---
 const Container = ({ children }) => (
   <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
 );
 
 const Section = ({ id, title, icon: Icon, children, altBg = false }) => (
-  <section id={id} className={`scroll-mt-24 py-12 ${altBg ? "bg-neutral-50 dark:bg-neutral-900" : ""}`}>
+  <section
+    id={id}
+    className={`scroll-mt-24 py-12 ${altBg ? "bg-neutral-50 dark:bg-neutral-900" : ""}`}
+  >
     <Container>
       <div className="flex items-center gap-3 mb-6">
         {Icon ? <Icon className="w-5 h-5" aria-hidden /> : null}
@@ -227,7 +203,7 @@ const Card = ({ children }) => (
   </div>
 );
 
-// Hooks utilitários
+// --- Hooks utilitários
 function useLocalStorage(key, initial) {
   const [value, setValue] = useState(() => {
     try {
@@ -411,7 +387,6 @@ function fmtDate(iso, lang) {
     return iso;
   }
 }
-
 const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
   const [open, setOpen] = useState(false);
   const navItems = [
@@ -436,7 +411,9 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
                   <a
                     href={i.href}
                     aria-current={active === i.href ? "page" : undefined}
-                    className={`relative hover:underline underline-offset-4 ${active === i.href ? "font-semibold" : ""}`}
+                    className={`relative hover:underline underline-offset-4 ${
+                      active === i.href ? "font-semibold" : ""
+                    }`}
                   >
                     {i.label}
                     {active === i.href && (
@@ -468,7 +445,11 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
         {open && (
           <div className="md:hidden pb-4 flex flex-col gap-3">
             {navItems.map((i) => (
-              <a key={i.href} href={i.href} className="py-2 border-b border-neutral-200 dark:border-neutral-800">
+              <a
+                key={i.href}
+                href={i.href}
+                className="py-2 border-b border-neutral-200 dark:border-neutral-800"
+              >
                 {i.label}
               </a>
             ))}
@@ -523,7 +504,7 @@ const Hero = ({ t }) => (
               href={links.linkedin}
               target="_blank"
               rel="me noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
               <Linkedin className="w-4 h-4" aria-hidden /> LinkedIn
             </a>
@@ -531,7 +512,7 @@ const Hero = ({ t }) => (
               href={links.github}
               target="_blank"
               rel="me noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
               <Github className="w-4 h-4" aria-hidden /> GitHub
             </a>
@@ -540,18 +521,6 @@ const Hero = ({ t }) => (
       </div>
     </Container>
   </section>
-);
-
-const SecHighlights = ({ t }) => (
-  <Section id="destaques" title={t("highlights.title")} icon={Newspaper}>
-    <div className="grid md:grid-cols-3 gap-6">
-      {t("highlights.items").map((item) => (
-        <Card key={item}>
-          <p className="text-sm text-neutral-700 dark:text-neutral-200">{item}</p>
-        </Card>
-      ))}
-    </div>
-  </Section>
 );
 
 const SecCV = ({ t }) => (
@@ -626,7 +595,9 @@ const SecAnalises = ({ t, lang, posts }) => (
               )}
             </div>
             <h3 className="mt-2 font-medium leading-snug">
-              {typeof p.title === "string" ? p.title : p.title[lang] || p.title.pt || p.title.en}
+              {typeof p.title === "string"
+                ? p.title
+                : p.title[lang] || p.title.pt || p.title.en}
             </h3>
             <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-200">
               {typeof p.summary === "string"
@@ -649,23 +620,19 @@ const SecAnalises = ({ t, lang, posts }) => (
 );
 
 const SecContacto = ({ t, lang }) => {
-  const [form, setForm] = useState({ name: "", email: "", message: "", company: "" }); // company = honeypot
-  const [status, setStatus] = useState(null); // "ok" | "error" | null
+  const [form, setForm] = useState({ name: "", email: "", message: "", company: "" }); // honeypot
+  const [status, setStatus] = useState(null);
 
   const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // honeypot
-    if (form.company) return; // provável bot
-
+    if (form.company) return; // bot honeypot
     if (!form.name || !form.email || !form.message) {
       setStatus("error");
       return;
     }
     setStatus("ok");
-
-    // Fallback: abre mailto preenchido
     const subject =
       (lang === "pt" ? "Contacto via site — " : "Website contact — ") + form.name;
     const body = `${form.message}\n\n— ${form.name}\n${form.email}`;
@@ -677,7 +644,12 @@ const SecContacto = ({ t, lang }) => {
   return (
     <Section id="contacto" title={t("contact.title")} icon={Mail}>
       <Card>
-        <form className="grid gap-4 md:grid-cols-2" onSubmit={handleSubmit} noValidate aria-live="polite">
+        <form
+          className="grid gap-4 md:grid-cols-2"
+          onSubmit={handleSubmit}
+          noValidate
+          aria-live="polite"
+        >
           <div className="md:col-span-1">
             <label htmlFor="name" className="block text-sm mb-1">
               {t("contact.name")}
@@ -726,8 +698,15 @@ const SecContacto = ({ t, lang }) => {
             />
           </div>
           {/* Honeypot */}
-          <input type="text" name="company" className="hidden" tabIndex={-1} autoComplete="off" value={form.company} onChange={onChange} />
-
+          <input
+            type="text"
+            name="company"
+            className="hidden"
+            tabIndex={-1}
+            autoComplete="off"
+            value={form.company}
+            onChange={onChange}
+          />
           <div className="md:col-span-2 flex items-center gap-3">
             <button
               type="submit"
@@ -735,23 +714,40 @@ const SecContacto = ({ t, lang }) => {
             >
               {t("contact.send")}
             </button>
-            <a href={links.email} className="inline-flex items-center gap-2 text-sm underline underline-offset-4">
+            <a
+              href={links.email}
+              className="inline-flex items-center gap-2 text-sm underline underline-offset-4"
+            >
               <Mail className="w-4 h-4" aria-hidden /> {t("contact.orEmail")}
             </a>
             {status === "ok" && (
-              <span className="text-sm text-green-600 dark:text-green-400">{t("contact.sentOk")}</span>
+              <span className="text-sm text-green-600 dark:text-green-400">
+                {t("contact.sentOk")}
+              </span>
             )}
             {status === "error" && (
-              <span className="text-sm text-red-600 dark:text-red-400">{t("contact.sentError")}</span>
+              <span className="text-sm text-red-600 dark:text-red-400">
+                {t("contact.sentError")}
+              </span>
             )}
           </div>
         </form>
       </Card>
       <div className="mt-4 flex items-center gap-4 text-sm">
-        <a href={links.linkedin} target="_blank" rel="me noopener noreferrer" className="underline underline-offset-4">
+        <a
+          href={links.linkedin}
+          target="_blank"
+          rel="me noopener noreferrer"
+          className="underline underline-offset-4"
+        >
           LinkedIn
         </a>
-        <a href={links.github} target="_blank" rel="me noopener noreferrer" className="underline underline-offset-4">
+        <a
+          href={links.github}
+          target="_blank"
+          rel="me noopener noreferrer"
+          className="underline underline-offset-4"
+        >
           GitHub
         </a>
         <a href={links.email} className="underline underline-offset-4">
@@ -784,7 +780,6 @@ const Footer = ({ t }) => (
     </Container>
   </footer>
 );
-
 export default function EconomistaSiteBase() {
   const { dark, setDark } = useTheme();
   const { lang, setLang, t } = useI18n();
@@ -811,14 +806,23 @@ export default function EconomistaSiteBase() {
         {lang === "pt" ? "Saltar para o conteúdo" : "Skip to content"}
       </a>
 
-      <Nav onToggleTheme={() => setDark((d) => !d)} dark={dark} lang={lang} setLang={setLang} t={t} active={active} />
+      <Nav
+        onToggleTheme={() => setDark((d) => !d)}
+        dark={dark}
+        lang={lang}
+        setLang={setLang}
+        t={t}
+        active={active}
+      />
 
       <main id="main">
         <Hero t={t} />
         <Section id="sobre" title={t("about.title")} icon={User}>
           <Container>
             <Card>
-              <p className="text-sm leading-7 text-neutral-800 dark:text-neutral-200">{t("aboutText")}</p>
+              <p className="text-sm leading-7 text-neutral-800 dark:text-neutral-200">
+                {t("aboutText")}
+              </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {skills.map((s) => (
                   <span
@@ -832,7 +836,6 @@ export default function EconomistaSiteBase() {
             </Card>
           </Container>
         </Section>
-        <SecHighlights t={t} />
         <SecCV t={t} />
         <SecAnalises t={t} lang={lang} posts={posts} />
         <SecContacto t={t} lang={lang} />
