@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import T from "../components/T";
 
 export default function DXY2025() {
   const [lang, setLang] = useState("pt");
@@ -40,35 +41,38 @@ export default function DXY2025() {
           style={{ fontFamily: "Georgia, serif", lineHeight: "1.5" }}
         >
           <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-6">
-            Índice do Dólar Americano (DXY)
+            <T lang={lang} srcLang="pt">Índice do Dólar Americano (DXY)</T>
           </h1>
 
           <p>
-            O Índice do Dólar Americano — <strong>DXY</strong> — oferece uma medida
-            fundamental para compreender a força relativa da moeda norte-americana
-            face a uma cesta ponderada de moedas estrangeiras. Criado em 1973 no
-            pós-Bretton Woods, corresponde a um valor médio ponderado do dólar
-            relativamente ao euro, iene, libra, dólar canadiano, coroa sueca e
-            franco suíço, sendo amplamente utilizado em análises cambiais e na
-            avaliação da moeda enquanto ativo de reserva. Rogoff (1985) e Lothian
-            (2006) discutem o seu papel histórico e limitam-se a considerar mudanças
-            na composição do índice como eventos raros, mas relevantes para a
-            interpretação dos movimentos no longo prazo.
+            <T lang={lang} srcLang="pt">
+              O Índice do Dólar Americano — DXY — oferece uma medida fundamental para compreender a força relativa da moeda norte-americana
+              face a uma cesta ponderada de moedas estrangeiras. Criado em 1973 no
+              pós-Bretton Woods, corresponde a um valor médio ponderado do dólar
+              relativamente ao euro, iene, libra, dólar canadiano, coroa sueca e
+              franco suíço, sendo amplamente utilizado em análises cambiais e na
+              avaliação da moeda enquanto ativo de reserva. Rogoff (1985) e Lothian
+              (2006) discutem o seu papel histórico e limitam-se a considerar mudanças
+              na composição do índice como eventos raros, mas relevantes para a
+              interpretação dos movimentos no longo prazo.
+            </T>
           </p>
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Panorama Histórico e Tendências de Fundo
+            <T lang={lang} srcLang="pt">Panorama Histórico e Tendências de Fundo</T>
           </h2>
           <p>
-            O gráfico histórico de longo prazo (Figura 1) evidencia os principais
-            ciclos do DXY desde os anos 1970, com máximos significativos em 1985
-            (cerca de 160 pontos) e 2002 (~120 pontos), refletindo políticas
-            monetárias restritivas e um fortalecimento económico dos EUA. O mínimo
-            de 2008 (~70 pontos) ilustra o impacto da crise financeira global,
-            seguido por uma estratégia monetária ultra-expansionista. Mais
-            recentemente, nota-se um canal ascendente iniciado após 2011, indicando
-            uma tendência estrutural de apreciação gradual do dólar, apesar da
-            volatilidade conjuntural.
+            <T lang={lang} srcLang="pt">
+              O gráfico histórico de longo prazo (Figura 1) evidencia os principais
+              ciclos do DXY desde os anos 1970, com máximos significativos em 1985
+              (cerca de 160 pontos) e 2002 (~120 pontos), refletindo políticas
+              monetárias restritivas e um fortalecimento económico dos EUA. O mínimo
+              de 2008 (~70 pontos) ilustra o impacto da crise financeira global,
+              seguido por uma estratégia monetária ultra-expansionista. Mais
+              recentemente, nota-se um canal ascendente iniciado após 2011, indicando
+              uma tendência estrutural de apreciação gradual do dólar, apesar da
+              volatilidade conjuntural.
+            </T>
           </p>
           <img
             src="/images/dxy/fig1.png"
@@ -77,17 +81,19 @@ export default function DXY2025() {
           />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Avaliação Técnica Atual
+            <T lang={lang} srcLang="pt">Avaliação Técnica Atual</T>
           </h2>
           <p>
-            No presente, para além da trajetória de longo prazo, é crucial observar
-            os movimentos no curto e médio prazo. O gráfico semanal (Figura 2), com
-            médias móveis de 20, 50, 100 e 200 períodos, revela que o DXY tem
-            oscilado dentro de um canal ascendente, com suporte firme na zona dos
-            97–98 pontos e a principal resistência em torno dos 120 pontos. Apesar
-            da pressão descendente de curto prazo indicada pelas médias móveis, o
-            canal permanece intacto, sugerindo que a tendência estrutural permanece
-            válida.
+            <T lang={lang} srcLang="pt">
+              No presente, para além da trajetória de longo prazo, é crucial observar
+              os movimentos no curto e médio prazo. O gráfico semanal (Figura 2), com
+              médias móveis de 20, 50, 100 e 200 períodos, revela que o DXY tem
+              oscilado dentro de um canal ascendente, com suporte firme na zona dos
+              97–98 pontos e a principal resistência em torno dos 120 pontos. Apesar
+              da pressão descendente de curto prazo indicada pelas médias móveis, o
+              canal permanece intacto, sugerindo que a tendência estrutural permanece
+              válida.
+            </T>
           </p>
           <img
             src="/images/dxy/fig2.png"
@@ -96,13 +102,15 @@ export default function DXY2025() {
           />
 
           <p>
-            O gráfico diário (Figura 3) permite observar com mais detalhe a
-            proximidade do suporte estrutural e a dinâmica dos indicadores técnicos.
-            O Stochastic RSI encontra-se em zona neutra (cerca de 45), apontando
-            para ausência clara de sobrecompra ou sobrevenda, enquanto o MACD indica
-            um enfraquecimento ligeiro do momentum. No seu conjunto, os dados
-            sugerem uma fase de consolidação, sem sinais inequívocos de reversão
-            imediata ou aceleração.
+            <T lang={lang} srcLang="pt">
+              O gráfico diário (Figura 3) permite observar com mais detalhe a
+              proximidade do suporte estrutural e a dinâmica dos indicadores técnicos.
+              O Stochastic RSI encontra-se em zona neutra (cerca de 45), apontando
+              para ausência clara de sobrecompra ou sobrevenda, enquanto o MACD indica
+              um enfraquecimento ligeiro do momentum. No seu conjunto, os dados
+              sugerem uma fase de consolidação, sem sinais inequívocos de reversão
+              imediata ou aceleração.
+            </T>
           </p>
           <img
             src="/images/dxy/fig3.png"
@@ -111,16 +119,18 @@ export default function DXY2025() {
           />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Correlações com Ativos de Refúgio
+            <T lang={lang} srcLang="pt">Correlações com Ativos de Refúgio</T>
           </h2>
           <p>
-            As relações entre o DXY e outros ativos ajudam a compreender o
-            comportamento do dólar em contextos de procura por segurança. O gráfico
-            comparativo com o ouro (Figura 4) confirma uma correlação inversa
-            clássica: períodos de apreciação significativa do ouro (2024–2025)
-            coincidiram com movimentos descendentes ou estabilização do DXY, o que
-            está de acordo com a literatura económica sobre a concorrência entre
-            ativos de reserva (Zhang e Wei, 2010).
+            <T lang={lang} srcLang="pt">
+              As relações entre o DXY e outros ativos ajudam a compreender o
+              comportamento do dólar em contextos de procura por segurança. O gráfico
+              comparativo com o ouro (Figura 4) confirma uma correlação inversa
+              clássica: períodos de apreciação significativa do ouro (2024–2025)
+              coincidiram com movimentos descendentes ou estabilização do DXY, o que
+              está de acordo com a literatura económica sobre a concorrência entre
+              ativos de reserva (Zhang e Wei, 2010).
+            </T>
           </p>
           <img
             src="/images/dxy/fig4.png"
@@ -129,10 +139,12 @@ export default function DXY2025() {
           />
 
           <p>
-            A correlação com o índice de volatilidade VIX (Figura 5) mostra o
-            comportamento esperado do dólar enquanto “porto seguro”: em fases de
-            stress global, onde o VIX eleva-se, o DXY tende a beneficiar devido à
-            procura por ativos mais seguros (Habib e Stracca, 2012).
+            <T lang={lang} srcLang="pt">
+              A correlação com o índice de volatilidade VIX (Figura 5) mostra o
+              comportamento esperado do dólar enquanto “porto seguro”: em fases de
+              stress global, onde o VIX eleva-se, o DXY tende a beneficiar devido à
+              procura por ativos mais seguros (Habib e Stracca, 2012).
+            </T>
           </p>
           <img
             src="/images/dxy/fig5.png"
@@ -141,96 +153,128 @@ export default function DXY2025() {
           />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Fatores Fundamentais em Contexto
+            <T lang={lang} srcLang="pt">Fatores Fundamentais em Contexto</T>
           </h2>
           <p>
-            Para além da análise técnica e das correlações, é essencial cruzar os
-            dados com variáveis macroeconómicas e monetárias que moldam a trajetória
-            do DXY. A política monetária do Fed (subidas ou cortes nas taxas de
-            juro) continua a ser um dos principais motores de valorização ou
-            enfraquecimento do índice. Engel e West (2005) destacam que os
-            fundamentos como diferencial de taxas, inflação ou crescimento
-            económico influenciam significativamente os movimentos cambiais, ainda
-            que muitas vezes os preços pareçam evoluir de forma quase aleatória
-            dentro de modelos de valor presente. Georgiadis (2016) evidencia que os
-            impactos globais das políticas norte-americanas dependem fortemente da
-            integração comercial e financeira, regime cambial e desenvolvimento de
-            mercado dos países-recetores, o que pode reforçar ou mitigar os efeitos
-            sobre o dólar. Por fim, Habib e Stracca (2012) dedicaram-se a
-            identificar os fundamentos que conferem estatuto de “safe-haven” às
-            moedas, concluindo que a posição de ativos líquidos externos e tamanho
-            do mercado acionista são determinantes robustas, mais do que simples
-            spreads de juros.
+            <T lang={lang} srcLang="pt">
+              Para além da análise técnica e das correlações, é essencial cruzar os
+              dados com variáveis macroeconómicas e monetárias que moldam a trajetória
+              do DXY. A política monetária do Fed (subidas ou cortes nas taxas de
+              juro) continua a ser um dos principais motores de valorização ou
+              enfraquecimento do índice. Engel e West (2005) destacam que os
+              fundamentos como diferencial de taxas, inflação ou crescimento
+              económico influenciam significativamente os movimentos cambiais, ainda
+              que muitas vezes os preços pareçam evoluir de forma quase aleatória
+              dentro de modelos de valor presente. Georgiadis (2016) evidencia que os
+              impactos globais das políticas norte-americanas dependem fortemente da
+              integração comercial e financeira, regime cambial e desenvolvimento de
+              mercado dos países-recetores, o que pode reforçar ou mitigar os efeitos
+              sobre o dólar. Por fim, Habib e Stracca (2012) dedicaram-se a
+              identificar os fundamentos que conferem estatuto de “safe-haven” às
+              moedas, concluindo que a posição de ativos líquidos externos e tamanho
+              do mercado acionista são determinantes robustas, mais do que simples
+              spreads de juros.
+            </T>
           </p>
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Preocupações e Riscos Futuros
+            <T lang={lang} srcLang="pt">Preocupações e Riscos Futuros</T>
           </h2>
           <p>
-            Em 2025, o DXY enfrenta incertezas que podem moldar a sua trajetória a
-            médio e longo prazo. A política monetária do Fed permanece um fator
-            crítico, com expectativas de cortes adicionais nas taxas de juro, numa
-            altura em que o crescimento económico dos EUA desacelera. Tal cenário
-            pode intensificar a pressão descendente sobre o índice, que já registou
-            a pior performance semestral desde 1991, testando suportes próximos de
-            98 pontos. Além disso, políticas comerciais agressivas, como tarifas
-            impostas pelos EUA, podem reduzir o PIB e enfraquecer a confiança no
-            dólar, enquanto a crescente desdolarização, com bancos centrais a
-            diversificarem reservas para euros ou ouro, ameaça o estatuto de "porto
-            seguro" do dólar num contexto global multipolar. A volatilidade
-            geopolítica, incluindo tensões comerciais EUA-China e eventos
-            imprevisíveis como eleições ou crises regionais, amplifica os riscos.
+            <T lang={lang} srcLang="pt">
+              Em 2025, o DXY enfrenta incertezas que podem moldar a sua trajetória a
+              médio e longo prazo. A política monetária do Fed permanece um fator
+              crítico, com expectativas de cortes adicionais nas taxas de juro, numa
+              altura em que o crescimento económico dos EUA desacelera. Tal cenário
+              pode intensificar a pressão descendente sobre o índice, que já registou
+              a pior performance semestral desde 1991, testando suportes próximos de
+              98 pontos. Além disso, políticas comerciais agressivas, como tarifas
+              impostas pelos EUA, podem reduzir o PIB e enfraquecer a confiança no
+              dólar, enquanto a crescente desdolarização, com bancos centrais a
+              diversificarem reservas para euros ou ouro, ameaça o estatuto de "porto
+              seguro" do dólar num contexto global multipolar. A volatilidade
+              geopolítica, incluindo tensões comerciais EUA-China e eventos
+              imprevisíveis como eleições ou crises regionais, amplifica os riscos.
+            </T>
           </p>
 
           <table className="table-auto border-collapse border border-neutral-400 my-12 w-full text-sm">
             <thead>
               <tr className="bg-neutral-200 dark:bg-neutral-800">
-                <th className="border px-4 py-2">Preocupação</th>
-                <th className="border px-4 py-2">Impacto Potencial no DXY</th>
-                <th className="border px-4 py-2">Probabilidade Estimada</th>
+                <th className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Preocupação</T>
+                </th>
+                <th className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Impacto Potencial no DXY</T>
+                </th>
+                <th className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Probabilidade Estimada</T>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="border px-4 py-2">Cortes agressivos nas taxas do Fed</td>
-                <td className="border px-4 py-2">Enfraquecimento para &lt;95 pontos</td>
-                <td className="border px-4 py-2">Alta (crescimento US lento)</td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Cortes agressivos nas taxas do Fed</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Enfraquecimento para &lt;95 pontos</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Alta (crescimento US lento)</T>
+                </td>
               </tr>
               <tr>
-                <td className="border px-4 py-2">Políticas comerciais e tarifas</td>
-                <td className="border px-4 py-2">Pressão descendente contínua</td>
-                <td className="border px-4 py-2">Média-Alta</td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Políticas comerciais e tarifas</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Pressão descendente contínua</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Média-Alta</T>
+                </td>
               </tr>
               <tr>
-                <td className="border px-4 py-2">Desdolarização global</td>
-                <td className="border px-4 py-2">Perda de estatuto a longo prazo</td>
-                <td className="border px-4 py-2">Média</td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Desdolarização global</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Perda de estatuto a longo prazo</T>
+                </td>
+                <td className="border px-4 py-2">
+                  <T lang={lang} srcLang="pt">Média</T>
+                </td>
               </tr>
             </tbody>
           </table>
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Conclusão Integrada
+            <T lang={lang} srcLang="pt">Conclusão Integrada</T>
           </h2>
           <p>
-            Em 2025, o DXY encontra-se num ponto crítico. Estruturalmente, continua
-            a mover-se dentro de um canal ascendente; tecnicamente, aproxima-se do
-            suporte forte em 97–98 pontos; fundamentalmente, enfrenta pressões
-            contrárias — cortes possíveis nas taxas do Fed tendem a enfraquecê-lo,
-            enquanto a instabilidade externa e o comportamento de refúgio
-            fortalecem-no. A sua correlação com ouro e VIX reforça o papel de
-            porto-seguro do dólar. Para o curto prazo, o valor de 97–98 pontos é
-            decisivo: uma quebra sustentável pode indicar novo ciclo de fraqueza; a
-            manutenção acima pode sinalizar retomada de valorização em direção a
-            105–110 pontos.
+            <T lang={lang} srcLang="pt">
+              Em 2025, o DXY encontra-se num ponto crítico. Estruturalmente, continua
+              a mover-se dentro de um canal ascendente; tecnicamente, aproxima-se do
+              suporte forte em 97–98 pontos; fundamentalmente, enfrenta pressões
+              contrárias — cortes possíveis nas taxas do Fed tendem a enfraquecê-lo,
+              enquanto a instabilidade externa e o comportamento de refúgio
+              fortalecem-no. A sua correlação com ouro e VIX reforça o papel de
+              porto-seguro do dólar. Para o curto prazo, o valor de 97–98 pontos é
+              decisivo: uma quebra sustentável pode indicar novo ciclo de fraqueza; a
+              manutenção acima pode sinalizar retomada de valorização em direção a
+              105–110 pontos.
+            </T>
           </p>
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Referências
+            <T lang={lang} srcLang="pt">Referências</T>
           </h2>
+
+          {/* Mantidas sem <T> para não partir o JSX com <a> internas */}
           <ul className="list-disc pl-6">
             <li>
-              Engel, C., & West, K. D. (2005).{" "}
+              Engel, C., &amp; West, K. D. (2005).{" "}
               <a href="https://doi.org/10.1086/429137" className="text-blue-600 underline">
                 Exchange Rates and Fundamentals
               </a>.
@@ -246,7 +290,7 @@ export default function DXY2025() {
               .
             </li>
             <li>
-              Habib, M. M., & Stracca, L. (2012).{" "}
+              Habib, M. M., &amp; Stracca, L. (2012).{" "}
               <a
                 href="https://doi.org/10.1016/j.jinteco.2011.12.005"
                 className="text-blue-600 underline"
@@ -256,7 +300,7 @@ export default function DXY2025() {
               .
             </li>
             <li>
-              Zhang, Y. J., & Wei, Y. M. (2010).{" "}
+              Zhang, Y. J., &amp; Wei, Y. M. (2010).{" "}
               <a
                 href="https://doi.org/10.1016/j.resourpol.2010.05.003"
                 className="text-blue-600 underline"
