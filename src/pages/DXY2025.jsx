@@ -34,7 +34,6 @@ export default function DXY2025() {
         </a>
       </div>
 
-      {/* Texto em Português */}
       {lang === "pt" && (
         <article
           className="leading-relaxed text-lg text-neutral-800 dark:text-neutral-200"
@@ -71,7 +70,11 @@ export default function DXY2025() {
             uma tendência estrutural de apreciação gradual do dólar, apesar da
             volatilidade conjuntural.
           </p>
-          <img src="/images/dxy/fig1.png" alt="Gráfico histórico trimestral do DXY (1967–2025)" className="my-12 mx-auto" />
+          <img
+            src="/images/dxy/fig1.png"
+            alt="Gráfico histórico trimestral do DXY (1967–2025)"
+            className="my-12 mx-auto"
+          />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
             Avaliação Técnica Atual
@@ -86,7 +89,11 @@ export default function DXY2025() {
             canal permanece intacto, sugerindo que a tendência estrutural permanece
             válida.
           </p>
-          <img src="/images/dxy/fig2.png" alt="Gráfico semanal do DXY com médias móveis (2020–2025)" className="my-12 mx-auto" />
+          <img
+            src="/images/dxy/fig2.png"
+            alt="Gráfico semanal do DXY com médias móveis (2020–2025)"
+            className="my-12 mx-auto"
+          />
 
           <p>
             O gráfico diário (Figura 3) permite observar com mais detalhe a
@@ -97,7 +104,11 @@ export default function DXY2025() {
             sugerem uma fase de consolidação, sem sinais inequívocos de reversão
             imediata ou aceleração.
           </p>
-          <img src="/images/dxy/fig3.png" alt="Gráfico diário do DXY com Stochastic RSI e MACD (2025)" className="my-12 mx-auto" />
+          <img
+            src="/images/dxy/fig3.png"
+            alt="Gráfico diário do DXY com Stochastic RSI e MACD (2025)"
+            className="my-12 mx-auto"
+          />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
             Correlações com Ativos de Refúgio
@@ -111,7 +122,11 @@ export default function DXY2025() {
             está de acordo com a literatura económica sobre a concorrência entre
             ativos de reserva (Zhang e Wei, 2010).
           </p>
-          <img src="/images/dxy/fig4.png" alt="Correlação entre DXY e ouro (2022–2025)" className="my-12 mx-auto" />
+          <img
+            src="/images/dxy/fig4.png"
+            alt="Correlação entre DXY e ouro (2022–2025)"
+            className="my-12 mx-auto"
+          />
 
           <p>
             A correlação com o índice de volatilidade VIX (Figura 5) mostra o
@@ -119,7 +134,11 @@ export default function DXY2025() {
             stress global, onde o VIX eleva-se, o DXY tende a beneficiar devido à
             procura por ativos mais seguros (Habib e Stracca, 2012).
           </p>
-          <img src="/images/dxy/fig5.png" alt="Correlação entre DXY e VIX (2022–2025)" className="my-12 mx-auto" />
+          <img
+            src="/images/dxy/fig5.png"
+            alt="Correlação entre DXY e VIX (2022–2025)"
+            className="my-12 mx-auto"
+          />
 
           <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
             Fatores Fundamentais em Contexto
@@ -218,237 +237,53 @@ export default function DXY2025() {
             </li>
             <li>
               Georgiadis, G. (2016).{" "}
-              <a href="https://doi.org/10.1016/j.jimonfin.2015.06.010" className="text-blue-600 underline">
+              <a
+                href="https://doi.org/10.1016/j.jimonfin.2015.06.010"
+                className="text-blue-600 underline"
+              >
                 Determinants of global spillovers from US monetary policy
-              </a>.
+              </a>
+              .
             </li>
             <li>
               Habib, M. M., & Stracca, L. (2012).{" "}
-              <a href="https://doi.org/10.1016/j.jinteco.2011.12.005" className="text-blue-600 underline">
+              <a
+                href="https://doi.org/10.1016/j.jinteco.2011.12.005"
+                className="text-blue-600 underline"
+              >
                 Getting beyond carry trade: What makes a safe haven currency?
-              </a>.
+              </a>
+              .
             </li>
             <li>
               Zhang, Y. J., & Wei, Y. M. (2010).{" "}
-              <a href="https://doi.org/10.1016/j.resourpol.2010.05.003" className="text-blue-600 underline">
+              <a
+                href="https://doi.org/10.1016/j.resourpol.2010.05.003"
+                className="text-blue-600 underline"
+              >
                 The crude oil market and the gold market
-              </a>.
+              </a>
+              .
             </li>
             <li>
               Rogoff, K. (1985).{" "}
-              <a href="https://doi.org/10.1016/0022-1996(85)90052-2" className="text-blue-600 underline">
+              <a
+                href="https://doi.org/10.1016/0022-1996(85)90052-2"
+                className="text-blue-600 underline"
+              >
                 Can international monetary policy cooperation be counterproductive?
-              </a>.
+              </a>
+              .
             </li>
             <li>
               Lothian, J. R. (2006).{" "}
-              <a href="https://research.library.fordham.edu/cgi/viewcontent.cgi?article=1011&context=crif_working_papers" className="text-blue-600 underline">
+              <a
+                href="https://research.library.fordham.edu/cgi/viewcontent.cgi?article=1011&context=crif_working_papers"
+                className="text-blue-600 underline"
+              >
                 The internationalization of money and finance
-              </a>.
-            </li>
-          </ul>
-        </article>
-      )}
-
-      {/* Texto em Inglês */}
-      {lang === "en" && (
-        <article
-          className="leading-relaxed text-lg text-neutral-800 dark:text-neutral-200"
-          style={{ fontFamily: "Georgia, serif", lineHeight: "1.5" }}
-        >
-          {/* --- aqui entra o bloco EN que já te enviei na resposta anterior --- */}
-        </article>
-      )}
-
-      {/* Texto em Inglês */}
-      {lang === "en" && (
-        <article
-          className="leading-relaxed text-lg text-neutral-800 dark:text-neutral-200"
-          style={{ fontFamily: "Georgia, serif", lineHeight: "1.5" }}
-        >
-          <h1 className="text-3xl font-bold text-blue-700 dark:text-blue-400 mb-6">
-            US Dollar Index (DXY)
-          </h1>
-
-          <p>
-            The US Dollar Index — <strong>DXY</strong> — provides a key measure of
-            the relative strength of the American currency against a weighted basket
-            of foreign currencies. Created in 1973 in the post-Bretton Woods era,
-            it represents a weighted average of the dollar against the euro, yen,
-            pound, Canadian dollar, Swedish krona, and Swiss franc. It is widely
-            used in exchange rate analysis and in assessing the dollar as a reserve
-            asset. Rogoff (1985) and Lothian (2006) discuss its historical role and
-            highlight that changes in its composition are rare but significant
-            events in interpreting long-term movements.
-          </p>
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Historical Overview and Structural Trends
-          </h2>
-          <p>
-            The long-term chart (Figure 1) illustrates the main DXY cycles since the
-            1970s, with peaks in 1985 (~160 points) and 2002 (~120 points),
-            reflecting restrictive monetary policies and strong US growth. The 2008
-            low (~70 points) highlights the global financial crisis, followed by an
-            ultra-expansionary monetary strategy. More recently, an upward channel
-            initiated in 2011 suggests a gradual appreciation trend, despite
-            cyclical volatility.
-          </p>
-          <img src="/images/dxy/fig1.png" alt="Long-term quarterly DXY chart (1967–2025)" className="my-12 mx-auto" />
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Current Technical Assessment
-          </h2>
-          <p>
-            In the short and medium term, the weekly chart (Figure 2) with 20-, 50-,
-            100-, and 200-period moving averages shows that DXY trades within an
-            ascending channel, with strong support at 97–98 points and major
-            resistance around 120 points. Despite short-term downward pressure
-            indicated by moving averages, the broader channel remains intact,
-            pointing to the persistence of the structural trend.
-          </p>
-          <img src="/images/dxy/fig2.png" alt="Weekly DXY chart with moving averages (2020–2025)" className="my-12 mx-auto" />
-
-          <p>
-            The daily chart (Figure 3) reveals the proximity of structural support
-            and the dynamics of technical indicators. The Stochastic RSI is in a
-            neutral zone (~45), showing no clear overbought or oversold signals,
-            while MACD points to slightly weaker momentum. Overall, the data suggest
-            consolidation, without clear signs of reversal or acceleration.
-          </p>
-          <img src="/images/dxy/fig3.png" alt="Daily DXY chart with Stochastic RSI and MACD (2025)" className="my-12 mx-auto" />
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Correlations with Safe-Haven Assets
-          </h2>
-          <p>
-            The relationship between DXY and other assets provides insight into its
-            role as a safe-haven currency. The comparative chart with gold (Figure
-            4) confirms the classic inverse correlation: major gold rallies
-            (2024–2025) coincided with sideways or downward moves in the DXY,
-            consistent with the economic literature on competition among reserve
-            assets (Zhang & Wei, 2010).
-          </p>
-          <img src="/images/dxy/fig4.png" alt="Correlation between DXY and gold (2022–2025)" className="my-12 mx-auto" />
-
-          <p>
-            The correlation with the VIX index (Figure 5) shows the dollar’s
-            expected safe-haven behaviour: during global stress episodes, when the
-            VIX rises, DXY tends to appreciate due to flight-to-quality (Habib &
-            Stracca, 2012).
-          </p>
-          <img src="/images/dxy/fig5.png" alt="Correlation between DXY and VIX (2022–2025)" className="my-12 mx-auto" />
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Fundamental Drivers
-          </h2>
-          <p>
-            Beyond technical analysis and correlations, macroeconomic and monetary
-            fundamentals shape the DXY trajectory. Fed policy (rate hikes or cuts)
-            remains the key driver. Engel & West (2005) argue that fundamentals such
-            as rate differentials, inflation, and growth matter for exchange rate
-            dynamics, though prices often appear to follow near-random walks.
-            Georgiadis (2016) shows that spillovers from US policy depend on trade
-            and financial integration, exchange-rate regimes, and market
-            development, which amplify or dampen dollar impacts. Habib & Stracca
-            (2012) identify external liquidity positions and stock market size as
-            robust determinants of safe-haven status, beyond interest rate spreads.
-          </p>
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Risks and Future Challenges
-          </h2>
-          <p>
-            In 2025, DXY faces uncertainties shaping its medium- to long-term
-            outlook. Fed rate cuts are expected amid slowing US growth, which may
-            add downward pressure, with the index already posting its weakest
-            half-year since 1991 near 98 points. Aggressive trade policies may weigh
-            on GDP and confidence, while global de-dollarisation, with central banks
-            diversifying into euros or gold, challenges the dollar’s safe-haven
-            role. Geopolitical volatility, including US-China trade tensions and
-            unpredictable shocks such as elections or regional crises, further
-            amplifies risks.
-          </p>
-
-          <table className="table-auto border-collapse border border-neutral-400 my-12 w-full text-sm">
-            <thead>
-              <tr className="bg-neutral-200 dark:bg-neutral-800">
-                <th className="border px-4 py-2">Concern</th>
-                <th className="border px-4 py-2">Potential DXY Impact</th>
-                <th className="border px-4 py-2">Estimated Probability</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border px-4 py-2">Aggressive Fed cuts</td>
-                <td className="border px-4 py-2">Weakening below 95</td>
-                <td className="border px-4 py-2">High (slow US growth)</td>
-              </tr>
-              <tr>
-                <td className="border px-4 py-2">Trade policies & tariffs</td>
-                <td className="border px-4 py-2">Ongoing downward pressure</td>
-                <td className="border px-4 py-2">Medium-High</td>
-              </tr>
-              <tr>
-                <td className="border px-4 py-2">Global de-dollarisation</td>
-                <td className="border px-4 py-2">Loss of status long term</td>
-                <td className="border px-4 py-2">Medium</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            Integrated Conclusion
-          </h2>
-          <p>
-            In 2025, DXY stands at a crossroads. Structurally, it remains within an
-            ascending channel; technically, it is near strong support at 97–98;
-            fundamentally, opposing pressures persist — Fed cuts weigh on it while
-            external instability and safe-haven demand support it. Correlations with
-            gold and VIX reaffirm the dollar’s refuge role. In the short term,
-            97–98 is critical: a sustained break below signals a new weakness cycle;
-            holding above suggests renewed appreciation towards 105–110.
-          </p>
-
-          <h2 className="text-2xl font-bold text-purple-700 dark:text-purple-300 mt-10 mb-4">
-            References
-          </h2>
-          <ul className="list-disc pl-6">
-            <li>
-              Engel, C., & West, K. D. (2005).{" "}
-              <a href="https://doi.org/10.1086/429137" className="text-blue-600 underline">
-                Exchange Rates and Fundamentals
-              </a>.
-            </li>
-            <li>
-              Georgiadis, G. (2016).{" "}
-              <a href="https://doi.org/10.1016/j.jimonfin.2015.06.010" className="text-blue-600 underline">
-                Determinants of global spillovers from US monetary policy
-              </a>.
-            </li>
-            <li>
-              Habib, M. M., & Stracca, L. (2012).{" "}
-              <a href="https://doi.org/10.1016/j.jinteco.2011.12.005" className="text-blue-600 underline">
-                Getting beyond carry trade: What makes a safe haven currency?
-              </a>.
-            </li>
-            <li>
-              Zhang, Y. J., & Wei, Y. M. (2010).{" "}
-              <a href="https://doi.org/10.1016/j.resourpol.2010.05.003" className="text-blue-600 underline">
-                The crude oil market and the gold market
-              </a>.
-            </li>
-            <li>
-              Rogoff, K. (1985).{" "}
-              <a href="https://doi.org/10.1016/0022-1996(85)90052-2" className="text-blue-600 underline">
-                Can international monetary policy cooperation be counterproductive?
-              </a>.
-            </li>
-            <li>
-              Lothian, J. R. (2006).{" "}
-              <a href="https://research.library.fordham.edu/cgi/viewcontent.cgi?article=1011&context=crif_working_papers" className="text-blue-600 underline">
-                The internationalization of money and finance
-              </a>.
+              </a>
+              .
             </li>
           </ul>
         </article>
