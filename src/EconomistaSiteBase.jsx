@@ -12,7 +12,6 @@ import {
   Newspaper,
   User,
   Globe,
-  Share2,
 } from "lucide-react";
 
 // ==========================
@@ -102,7 +101,6 @@ const DICT = {
       empty:
         "Ainda não há artigos publicados. Quando criar o primeiro, adicione um objeto no array `posts` com título, data, resumo e url.",
       readMore: "Ler mais",
-      share: "Partilhar",
     },
     contact: {
       title: "Contacto",
@@ -160,7 +158,6 @@ const DICT = {
       empty:
         "No posts yet. When you create the first one, add an object to the `posts` array with title, date, summary, and URL.",
       readMore: "Read more",
-      share: "Share",
     },
     contact: {
       title: "Contact",
@@ -307,15 +304,10 @@ function useSeo(lang, t) {
       lang === "pt"
         ? "Economista especializado em macroeconomia, política monetária e análise de dados. Análises semanais sobre a Zona Euro, Portugal e tendências globais."
         : "Economist focused on macroeconomics, monetary policy, and data analysis. Weekly insights on the Euro Area, Portugal, and global trends.";
-    const keywords =
-      lang === "pt"
-        ? "economista, macroeconomia, política monetária, análise de dados, Portugal, Zona Euro"
-        : "economist, macroeconomics, monetary policy, data analysis, Portugal, Euro Area";
 
     document.title = title;
 
     ensureMetaName("description", desc);
-    ensureMetaName("keywords", keywords);
     ensureMetaProp("og:title", title);
     ensureMetaProp("og:description", desc);
     ensureMetaProp("og:type", "website");
@@ -433,24 +425,20 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
             </ul>
             <button
               onClick={onToggleTheme}
-              aria-label={t("ui.theme") + (dark ? " (Dark)" : " (Light)")}
+              aria-label={t("ui.theme")}
               className="p-2 rounded-xl border border-neutral-200 dark:border-neutral-800 transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
               {dark ? <Sun className="w-4 h-4" aria-hidden /> : <Moon className="w-4 h-4" aria-hidden />}
             </button>
             <button
               onClick={toggleLang}
-              aria-label={t("ui.language") + ` (${DICT[lang].langLabel})`}
+              aria-label={t("ui.language")}
               className="px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 text-sm transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
             >
               {DICT[lang].langLabel}
             </button>
           </nav>
-          <button
-            className="md:hidden p-2"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Toggle menu"
-          >
+          <button className="md:hidden p-2" onClick={() => setOpen((o) => !o)} aria-label="Menu">
             {open ? <X aria-hidden /> : <Menu aria-hidden />}
           </button>
         </div>
@@ -469,7 +457,6 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
               <button
                 onClick={onToggleTheme}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
-                aria-label={t("ui.theme") + (dark ? " (Dark)" : " (Light)")}
               >
                 {dark ? <Sun className="w-4 h-4" aria-hidden /> : <Moon className="w-4 h-4" aria-hidden />}
                 <span>{t("ui.theme")}</span>
@@ -477,7 +464,6 @@ const Nav = ({ onToggleTheme, dark, lang, setLang, t, active }) => {
               <button
                 onClick={() => setLang(lang === "pt" ? "en" : "pt")}
                 className="inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-neutral-950"
-                aria-label={t("ui.language") + ` (${DICT[lang].langLabel})`}
               >
                 <Globe className="w-4 h-4" aria-hidden />
                 <span>{DICT[lang].langLabel}</span>
@@ -495,10 +481,10 @@ const Hero = ({ t }) => (
     <Container>
       <div className="grid md:grid-cols-2 gap-8 items-center">
         <div className="text-center md:text-left">
-          <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-blue-800 dark:text-blue-300">
+          <h1 className="text-3xl md:text-4xl font-semibold leading-tight text-blue-700 dark:text-blue-400">
             {t("hero.title")}
           </h1>
-          <p className="mt-4 text-neutral-800 dark:text-neutral-200">{t("hero.blurb")}</p>
+          <p className="mt-4 text-neutral-700 dark:text-neutral-200">{t("hero.blurb")}</p>
           <div className="mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
             <a
               href={links.cv}
@@ -531,15 +517,6 @@ const Hero = ({ t }) => (
               <Github className="w-4 h-4" aria-hidden /> GitHub
             </a>
           </div>
-        </div>
-        {/* Placeholder for future image with lazy loading */}
-        <div className="hidden md:block">
-          <img
-            src="/hero-image.jpg"
-            alt="Vítor Reis professional portrait"
-            className="rounded-lg object-cover w-full h-64 lazyload"
-            loading="lazy"
-          />
         </div>
       </div>
     </Container>
@@ -598,10 +575,10 @@ const SecAnalises = ({ t, lang, posts }) => (
   <Section id="analises" title={t("posts.title")} icon={Newspaper} altBg>
     {posts.length === 0 ? (
       <Card>
-        <p className="text-sm text-neutral-800 dark:text-neutral-200">{t("posts.empty")}</p>
+        <p className="text-sm text-neutral-700 dark:text-neutral-200">{t("posts.empty")}</p>
       </Card>
     ) : (
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-6 md:grid-cols-2">
         {posts.map((p) => (
           <Card key={p.id}>
             <div className="flex items-center gap-2 text-xs text-neutral-500">
@@ -622,31 +599,19 @@ const SecAnalises = ({ t, lang, posts }) => (
                 ? p.title
                 : p.title[lang] || p.title.pt || p.title.en}
             </h3>
-            <p className="mt-2 text-sm text-neutral-800 dark:text-neutral-200">
+            <p className="mt-2 text-sm text-neutral-700 dark:text-neutral-200">
               {typeof p.summary === "string"
                 ? p.summary
                 : p.summary[lang] || p.summary.pt || p.summary.en}
             </p>
-            <div className="mt-3 flex gap-3">
-              <a
-                href={p.url}
-                className="inline-flex items-center text-sm underline underline-offset-4"
-                target={p.url?.startsWith("http") ? "_blank" : undefined}
-                rel={p.url?.startsWith("http") ? "noopener noreferrer" : undefined}
-              >
-                {t("posts.readMore")}
-              </a>
-              <a
-                href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                  `${p.title[lang] || p.title.pt || p.title.en} - ${links.siteOrigin}${p.url}`
-                )}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-sm underline underline-offset-4"
-              >
-                <Share2 className="w-4 h-4 mr-1" aria-hidden /> {t("posts.share")}
-              </a>
-            </div>
+            <a
+              href={p.url}
+              className="mt-3 inline-flex text-sm underline underline-offset-4"
+              target={p.url?.startsWith("http") ? "_blank" : undefined}
+              rel={p.url?.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              {t("posts.readMore")}
+            </a>
           </Card>
         ))}
       </div>
@@ -791,9 +756,10 @@ const SecContacto = ({ t, lang }) => {
       </div>
     </Section>
   );
+};
 
 const Footer = ({ t }) => (
-  <footer className="py-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-800 dark:text-neutral-200">
+  <footer className="py-8 border-t border-neutral-200 dark:border-neutral-800 text-sm text-neutral-700 dark:text-neutral-300">
     <Container>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
         <div>
@@ -835,7 +801,7 @@ export default function EconomistaSiteBase() {
       {/* Skip to content (acessibilidade) */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only fixed top-2 left-2 bg-neutral-900 text-white px-3 py-2 rounded focus:ring-2 focus:ring-blue-500"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 bg-neutral-900 text-white px-3 py-2 rounded"
       >
         {lang === "pt" ? "Saltar para o conteúdo" : "Skip to content"}
       </a>
@@ -854,14 +820,14 @@ export default function EconomistaSiteBase() {
         <Section id="sobre" title={t("about.title")} icon={User}>
           <Container>
             <Card>
-              <p className="text-sm leading-7 text-neutral-900 dark:text-neutral-100">
+              <p className="text-sm leading-7 text-neutral-800 dark:text-neutral-200">
                 {t("aboutText")}
               </p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {skills.map((s) => (
                   <span
                     key={s}
-                    className="text-xs px-3 py-1 rounded-full border border-neutral-300 dark:border-neutral-700"
+                    className="text-xs px-3 py-1 rounded-full border border-neutral-200 dark:border-neutral-800"
                   >
                     {s}
                   </span>
