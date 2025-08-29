@@ -2,11 +2,16 @@
 import React, { useEffect, useState } from "react";
 import { autoTranslate } from "../lib/translateService";
 
-// props:
-// - children: string original
-// - srcLang: "pt" | "en" (idioma do children)
-// - lang: idioma atual do site (pt|en), vindo do teu estado global
-// - official?: string (tradução oficial, se existir)
+/**
+ * Componente de fallback de tradução:
+ * - Se lang === srcLang -> mostra children tal como está.
+ * - Se official (tradução oficial) existir -> usa official.
+ * - Caso contrário -> tenta tradução automática (cache local).
+ *
+ * Uso típico:
+ * <T lang={lang} srcLang="pt">Texto original em PT</T>
+ * <T lang={lang} srcLang="pt" official="English manual translation">Texto PT</T>
+ */
 export default function T({ children, srcLang = "pt", lang = "pt", official }) {
   const [text, setText] = useState(children);
 
@@ -17,12 +22,10 @@ export default function T({ children, srcLang = "pt", lang = "pt", official }) {
         if (mounted) setText(children);
         return;
       }
-      // se houver tradução oficial escrita à mão, usa-a
       if (official) {
         if (mounted) setText(official);
         return;
       }
-      // fallback automático
       const t = await autoTranslate(children, srcLang, lang);
       if (mounted) setText(t);
     })();

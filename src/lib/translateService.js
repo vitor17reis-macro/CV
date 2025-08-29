@@ -1,5 +1,10 @@
 // src/lib/translateService.js
-const DEFAULT_ENDPOINT = import.meta.env.VITE_LT_ENDPOINT || "https://translate.argosopentech.com";
+// Fallback de tradução automática via LibreTranslate.
+// Usa um proxy local (/api/translate) por omissão para evitar CORS.
+// Se preferires apontar diretamente para uma instância pública ou self-hosted,
+// define VITE_LT_ENDPOINT no Vercel (ex.: https://translate.argosopentech.com).
+
+const DEFAULT_ENDPOINT = import.meta.env.VITE_LT_ENDPOINT || "/api";
 
 const CACHE_KEY = "autoTranslations_v1";
 
@@ -7,13 +12,20 @@ function getCache() {
   try { return JSON.parse(localStorage.getItem(CACHE_KEY) || "{}"); }
   catch { return {}; }
 }
+
 function setCache(obj) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(obj)); } catch {}
 }
+
 function keyHash(text, src, tgt) {
-  return `${src}::${tgt}::${text}`; // simples e suficiente
+  return `${src}::${tgt}::${text}`;
 }
 
+/**
+ * autoTranslate(text, srcLang, targetLang)
+ * - Devolve o próprio texto se já estiver no idioma alvo ou em caso de erro.
+ * - Cacheia resultados em localStorage para poupar chamadas.
+ */
 export async function autoTranslate(text, srcLang, targetLang) {
   if (!text || srcLang === targetLang) return text;
 
@@ -34,7 +46,7 @@ export async function autoTranslate(text, srcLang, targetLang) {
     setCache(cache);
     return translated;
   } catch {
-    // falha silenciosa -> devolve original
+    // Falha silenciosa -> devolve original
     return text;
   }
 }
