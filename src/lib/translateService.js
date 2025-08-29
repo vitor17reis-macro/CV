@@ -1,6 +1,5 @@
-\
 // src/lib/translateService.js
-const DEFAULT_ENDPOINT = "https://translate.argosopentech.com";
+const DEFAULT_ENDPOINT = "/api/translate"; // <— em vez de https://translate.argosopentech.com
 const CACHE_KEY = "autoTranslations_v1";
 
 function getCache() {
@@ -21,22 +20,15 @@ export async function autoTranslate(text, srcLang, targetLang) {
     const k = keyHash(text, srcLang, targetLang);
     if (cache[k]) return cache[k];
 
-    const res = await fetch(`${DEFAULT_ENDPOINT}/translate`, {
+    const res = await fetch(DEFAULT_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q: String(text), source: srcLang, target: targetLang, format: "text" }),
+      body: JSON.stringify({ q: String(text), source: srcLang, target: targetLang }),
     });
 
-    let data = null;
-    try { data = await res.json(); }
-    catch { data = null; }
-
-    if (!res.ok || !data) {
-      console.warn("[translateService] Non-OK or non-JSON response, returning original text.");
-      return text;
-    }
-
+    const data = await res.json();
     const translated = data?.translatedText;
+
     if (typeof translated === "string" && translated.trim().length > 0) {
       cache[k] = translated;
       setCache(cache);

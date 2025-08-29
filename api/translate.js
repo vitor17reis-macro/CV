@@ -1,28 +1,43 @@
-// api/translate.js
-// API Route para Vercel (Edge/Node) a servir de proxy para LibreTranslate.
-// Evita problemas de CORS e permite configurar LT_ENDPOINT no Vercel.
+// /api/translate.js — Serverless Function (Vercel)
 export default async function handler(req, res) {
   if (req.method === "OPTIONS") {
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-    res.status(204).end();
-    return;
+    return res.status(204).end();
   }
-  try {
-    const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    const { q, source, target, format = "text" } = body;
-    const endpoint = (process.env.LT_ENDPOINT || "https://translate.argosopentech.com") + "/translate";
 
-    const r = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ q, source, target, format }),
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  try {
+    const body = await new Promise((resolve, reject) => {
+      let data = "";
+      req.on("data", (chunk) => (data += chunk));
+      req.on("end", () => resolve(JSON.parse(data || "{}")));
+      req.on("error", reject);
     });
 
-    const data = await r.json();
+   const upstream = await fetch("https://libretranslate.de/translate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        q: String(body.q || ""),
+        source: body.source || "pt",
+        target: body.target || "en",
+        format: "text",
+      }),
+    });
+
+    const json = await upstream.json();
+
     res.setHeader("Access-Control-Allow-Origin", "*");
-    res.status(200).json(data);
+    res.setHeader("Content-Type", "application/json");
+    return res.status(200).json(json);
   } catch (e) {
-    res.status(500).json({ error: "proxy_error", detail: String(e) });
+    console.error("[/api/translate] error:", e);
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    return res.status(500).json({ error: "Translate proxy failed" });
   }
 }

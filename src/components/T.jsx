@@ -1,4 +1,3 @@
-\
 // src/components/T.jsx
 import React, { useEffect, useState } from "react";
 import { autoTranslate } from "../lib/translateService";
