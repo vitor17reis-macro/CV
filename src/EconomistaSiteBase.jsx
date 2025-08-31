@@ -43,6 +43,21 @@ const postsBase = [
     tags: ["DXY", "Macroeconomia"],
     lang: "pt",
   },
+  {
+    id: "portfolios-analise-2025",
+    isoDate: "2025-08-31",
+    title: {
+      pt: "Investimento Conservador com Exposição a Tecnologia, Inteligência Artificial e Criptomoedas",
+      en: "Conservative Investment with Exposure to Technology, Artificial Intelligence, and Cryptocurrencies",
+    },
+    summary: {
+      pt: "Análise comparativa de três portfólios com diferentes perfis de risco, integrando ativos tradicionais e inovadores, com simulação de 20 anos.",
+      en: "Comparative analysis of three portfolios with varying risk profiles, integrating traditional and innovative assets, with a 20-year simulation.",
+    },
+    url: "/analises/portfolios-2025",
+    tags: ["Portfólios", "Criptomoedas", "Tecnologia"],
+    lang: "pt",
+  },
 ];
 
 const skills = [
