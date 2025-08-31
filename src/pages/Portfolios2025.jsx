@@ -6,6 +6,21 @@ const Container = ({ children }) => (
   <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
 );
 
+
+
+{/* Nota de Realidade / Reality Check */}
+<div className="my-6 rounded-2xl border p-4 sm:p-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
+  <h3 className="text-lg font-semibold mb-2">
+    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteTitle}>
+      {translations?.[lang]?.realityNoteTitle || (lang === "pt" ? "Nota de Realidade" : "Reality Check")}
+    </T>
+  </h3>
+  <p className="leading-relaxed">
+    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteText}>
+      {translations?.[lang]?.realityNoteText || ""}
+    </T>
+  </p>
+</div>
 export default function Portfolios2025() {
   const [lang, setLang] = useState("pt");
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -44,6 +59,8 @@ export default function Portfolios2025() {
       conclusion: "Conclusão",
       conclusionText: "A diversificação entre ativos tradicionais e inovadores é eficaz para investidores de longo prazo. O Cenário A assegura estabilidade, o Cenário B equilibra segurança e valorização, e o Cenário C maximiza retornos com maior risco. A escolha depende do perfil de risco e objetivos do investidor.",
       references: "Referências",
+      realityNoteTitle: "Nota de Realidade",
+      realityNoteText: "Estes resultados são projeções simplificadas e não garantem desempenhos futuros. Não incluem impostos, comissões, slippage, custos de reequilíbrio nem tracking error de ETFs. As rentabilidades médias assumem distribuição estável e não capturam risco de sequência de retornos (anos negativos no início reduzem fortemente o valor final). A inflação reduz o poder de compra do montante acumulado. As contribuições mensais presumem execução perfeita no último dia útil e ausência de falhas de disciplina de poupança.",
       backToAnalyses: "Voltar à página anterior",
     },
     en: {
@@ -79,6 +96,8 @@ export default function Portfolios2025() {
       conclusion: "Conclusion",
       conclusionText: "Diversification between traditional and innovative assets is effective for long-term investors. Scenario A ensures stability, Scenario B balances safety and growth, and Scenario C maximizes returns with higher risk. The choice depends on the investor’s risk profile and objectives.",
       references: "References",
+      realityNoteTitle: "Reality Check",
+      realityNoteText: "These results are simplified projections and do not guarantee future performance. They exclude taxes, fees, slippage, rebalancing costs, and ETF tracking error. Average returns assume stable distributions and do not capture sequence-of-returns risk (early negative years can materially reduce the final balance). Inflation erodes purchasing power. Monthly contributions assume perfect execution on the last business day and no lapses in savings discipline.",
       backToAnalyses: "Return to previous page",
     },
   };

@@ -2,7 +2,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import EconomistaSiteBase from './EconomistaSiteBase';
 import DXY2025 from './pages/DXY2025';
-import Portfolios2025 from './pages/Portfolio2025';
+import Portfolios2025 from './pages/Portfolios2025';
 
 function App() {
   return (
