@@ -6,25 +6,6 @@ const Container = ({ children }) => (
   <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
 );
 
-
-
-{/* Nota de Realidade / Reality Check */}
-<div className="my-6 rounded-2xl border p-4 sm:p-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
-  <h3 className="text-lg font-semibold mb-2">
-    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteTitle}>
-      {translations?.[lang]?.realityNoteTitle || (lang === "pt" ? "Nota de Realidade" : "Reality Check")}
-    </T>
-  </h3>
-  <p className="leading-relaxed">
-    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteText}>
-      {translations?.[lang]?.realityNoteText || ""}
-    </T>
-  </p>
-</div>
-export default function Portfolios2025() {
-  const [lang, setLang] = useState("pt");
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
   const translations = {
     pt: {
       title: "Investimento Conservador com Exposição a Tecnologia, Inteligência Artificial e Criptomoedas",
