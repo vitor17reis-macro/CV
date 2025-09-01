@@ -13,6 +13,7 @@ import {
   User,
   Globe,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 // ==========================
 // Website — Vítor Reis — PRONTO A COLAR
@@ -619,14 +620,12 @@ const SecAnalises = ({ t, lang, posts }) => (
                 ? p.summary
                 : p.summary[lang] || p.summary.pt || p.summary.en}
             </p>
-            <a
-              href={p.url}
-              className="mt-3 inline-flex text-sm underline underline-offset-4"
-              target={p.url?.startsWith("http") ? "_blank" : undefined}
-              rel={p.url?.startsWith("http") ? "noopener noreferrer" : undefined}
+          <Link
+            to={p.url}
+            className="mt-3 inline-flex text-sm underline underline-offset-4"
             >
-              {t("posts.readMore")}
-            </a>
+           {t("posts.readMore")}
+         </Link>
           </Card>
         ))}
       </div>
