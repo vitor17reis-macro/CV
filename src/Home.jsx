@@ -59,6 +59,21 @@ const postsBase = [
     tags: ["Portfólios", "Criptomoedas", "Tecnologia"],
     lang: "pt",
   },
+  {
+   id: "public-debt-analise-2025",
+   isoDate: "2025-09-03",
+   title: {
+     pt: "Dívida Pública Global: Tendências, Riscos e Sustentabilidade",
+     en: "Global Public Debt: Trends, Risks and Sustainability",
+    },
+  summary: {
+     pt: "Análise da evolução da dívida pública mundial com base nos dados do FMI, destacando projeções, riscos e sustentabilidade fiscal.",
+     en: "Analysis of the evolution of global public debt based on IMF data, highlighting projections, risks, and fiscal sustainability.",
+    },
+    url: "/analises/public-debt-2025",
+    tags: ["Dívida Pública", "Macroeconomia"],
+    lang: "pt",
+  }
 ];
 
 const skills = [

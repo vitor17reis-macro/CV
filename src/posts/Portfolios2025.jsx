@@ -1,3 +1,4 @@
+// src/pages/Portfolios2025.jsx
 import React, { useState } from "react";
 import { ArrowLeft, Moon, Sun, Globe } from "lucide-react";
 import T from "../components/T";
@@ -6,21 +7,6 @@ const Container = ({ children }) => (
   <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
 );
 
-
-
-{/* Nota de Realidade / Reality Check */}
-<div className="my-6 rounded-2xl border p-4 sm:p-6 bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800">
-  <h3 className="text-lg font-semibold mb-2">
-    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteTitle}>
-      {translations?.[lang]?.realityNoteTitle || (lang === "pt" ? "Nota de Realidade" : "Reality Check")}
-    </T>
-  </h3>
-  <p className="leading-relaxed">
-    <T lang={lang} srcLang="pt" official={translations?.[lang]?.realityNoteText}>
-      {translations?.[lang]?.realityNoteText || ""}
-    </T>
-  </p>
-</div>
 export default function Portfolios2025() {
   const [lang, setLang] = useState("pt");
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -103,9 +89,13 @@ export default function Portfolios2025() {
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDarkMode ? "bg-gradient-to-b from-neutral-950 to-neutral-900 dark" : "bg-gradient-to-b from-blue-50 to-white"
-    } text-neutral-900 dark:text-neutral-100`}>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        isDarkMode
+          ? "bg-gradient-to-b from-neutral-950 to-neutral-900 dark"
+          : "bg-gradient-to-b from-blue-50 to-white"
+      } text-neutral-900 dark:text-neutral-100`}
+    >
       {/* Navigation */}
       <header className="sticky top-0 z-50 backdrop-blur supports-[backdrop-filter]:bg-white/70 dark:supports-[backdrop-filter]:bg-neutral-900/70 border-b border-neutral-200 dark:border-neutral-800">
         <Container>
@@ -118,7 +108,9 @@ export default function Portfolios2025() {
               <button
                 onClick={() => setLang("pt")}
                 className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 font-semibold transition-all ${
-                  lang === "pt" ? "bg-blue-600 text-white" : "bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-200 hover:bg-blue-100 dark:hover:bg-blue-900"
+                  lang === "pt"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-200 hover:bg-blue-100 dark:hover:bg-blue-900"
                 }`}
               >
                 <Globe className="w-4 h-4" aria-hidden /> PT
@@ -126,7 +118,9 @@ export default function Portfolios2025() {
               <button
                 onClick={() => setLang("en")}
                 className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl border border-neutral-200 dark:border-neutral-800 font-semibold transition-all ${
-                  lang === "en" ? "bg-blue-600 text-white" : "bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-200 hover:bg-blue-100 dark:hover:bg-blue-900"
+                  lang === "en"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white dark:bg-neutral-950 text-neutral-700 dark:text-neutral-200 hover:bg-blue-100 dark:hover:bg-blue-900"
                 }`}
               >
                 <Globe className="w-4 h-4" aria-hidden /> EN
@@ -183,41 +177,25 @@ export default function Portfolios2025() {
                 <T lang={lang} translations={translations}>{translations[lang].methodologyText}</T>
               </p>
               <figure>
-                <img
-                  src="/images/portfolios/fig1.png"
-                  alt={translations[lang].fig1Caption}
-                  className="my-6 mx-auto rounded-lg shadow-md"
-                />
+                <img src="/images/portfolios/fig1.png" alt={translations[lang].fig1Caption} className="my-6 mx-auto rounded-lg shadow-md" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig1Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img
-                  src="/images/portfolios/fig2.png"
-                  alt={translations[lang].fig2Caption}
-                  className="my-6 mx-auto rounded-lg shadow-md"
-                />
+                <img src="/images/portfolios/fig2.png" alt={translations[lang].fig2Caption} className="my-6 mx-auto rounded-lg shadow-md" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig2Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img
-                  src="/images/portfolios/fig3.png"
-                  alt={translations[lang].fig3Caption}
-                  className="my-6 mx-auto rounded-lg shadow-md"
-                />
+                <img src="/images/portfolios/fig3.png" alt={translations[lang].fig3Caption} className="my-6 mx-auto rounded-lg shadow-md" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig3Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img
-                  src="/images/portfolios/fig4.png"
-                  alt={translations[lang].fig4Caption}
-                  className="my-6 mx-auto rounded-lg shadow-md"
-                />
+                <img src="/images/portfolios/fig4.png" alt={translations[lang].fig4Caption} className="my-6 mx-auto rounded-lg shadow-md" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig4Caption}</T>
                 </figcaption>
@@ -230,11 +208,7 @@ export default function Portfolios2025() {
                 <T lang={lang} translations={translations}>{translations[lang].resultsText}</T>
               </p>
               <figure>
-                <img
-                  src="/images/portfolios/fig5.png"
-                  alt={translations[lang].fig5Caption}
-                  className="my-6 mx-auto rounded-lg shadow-md"
-                />
+                <img src="/images/portfolios/fig5.png" alt={translations[lang].fig5Caption} className="my-6 mx-auto rounded-lg shadow-md" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig5Caption}</T>
                 </figcaption>
@@ -256,37 +230,19 @@ export default function Portfolios2025() {
                 </thead>
                 <tbody>
                   <tr>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow1Scenario}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow1FutureValue}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow1SharpeRatio}</T>
-                    </td>
+                    <td className="border px-4 py-2"><T lang={lang} translations={translations}>{translations[lang].tableRow1Scenario}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow1FutureValue}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow1SharpeRatio}</T></td>
                   </tr>
                   <tr>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow2Scenario}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow2FutureValue}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow2SharpeRatio}</T>
-                    </td>
+                    <td className="border px-4 py-2"><T lang={lang} translations={translations}>{translations[lang].tableRow2Scenario}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow2FutureValue}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow2SharpeRatio}</T></td>
                   </tr>
                   <tr>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow3Scenario}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow3FutureValue}</T>
-                    </td>
-                    <td className="border border-neutral-200 dark:border-neutral-800 px-4 py-2">
-                      <T lang={lang} translations={translations}>{translations[lang].tableRow3SharpeRatio}</T>
-                    </td>
+                    <td className="border px-4 py-2"><T lang={lang} translations={translations}>{translations[lang].tableRow3Scenario}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow3FutureValue}</T></td>
+                    <td className="border px-4 py-2 text-center"><T lang={lang} translations={translations}>{translations[lang].tableRow3SharpeRatio}</T></td>
                   </tr>
                 </tbody>
               </table>
@@ -308,44 +264,19 @@ export default function Portfolios2025() {
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
                 <T lang={lang} translations={translations}>{translations[lang].references}</T>
               </h2>
-              <ul className="list-disc pl-6 mb-6 text-neutral-900 dark:text-neutral-100">
-                <li>
-                  Markowitz, H. (1952).{" "}
-                  <a href="https://doi.org/10.2307/2975974" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    Portfolio selection
-                  </a>. The Journal of Finance, 7(1), 77–91.
-                </li>
-                <li>
-                  Sharpe, W. F. (1964).{" "}
-                  <a href="https://doi.org/10.2307/2325486" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    Capital asset prices: A theory of market equilibrium under conditions of risk
-                  </a>. The Journal of Finance, 19(3), 425–442.
-                </li>
-                <li>
-                  Baur, D. G., Hong, K., & Lee, A. D. (2018).{" "}
-                  <a href="https://doi.org/10.1016/j.intfin.2017.12.004" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    Bitcoin: Medium of exchange or speculative assets?
-                  </a>. Journal of International Financial Markets, Institutions and Money, 54, 177–189.
-                </li>
-                <li>
-                  Brynjolfsson, E., & McAfee, A. (2014).{" "}
-                  <a href="https://www.amazon.com/Second-Machine-Age-Prosperity-Technologies/dp/0393239357" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    The second machine age: Work, progress, and prosperity in a time of brilliant technologies
-                  </a>. W.W. Norton & Company.
-                </li>
-                <li>
-                  Deloitte. (2025).{" "}
-                  <a href="https://www.deloitte.com/us/en/insights/topics/business-strategy-growth/2q-2025-cfo-signals-survey.html" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    Crypto is gaining currency with North American CFOs
-                  </a>.
-                </li>
-                <li>
-                  McKinsey & Company. (2025).{" "}
-                  <a href="https://www.mckinsey.com/capabilities/mckinsey-digital/our-insights/superagency-in-the-workplace-empowering-people-to-unlock-ais-full-potential-at-work" className="text-blue-600 dark:text-blue-400 underline hover:text-blue-700 dark:hover:text-blue-300">
-                    AI in the workplace: A report for 2025
-                  </a>.
-                </li>
+              <ul className="list-disc pl-6 mb-6">
+                <li>Baur, D. G., Hong, K., & Lee, A. D. (2018). Bitcoin: Medium of exchange or speculative assets? Journal of International Financial Markets, Institutions and Money, 54, 177–189.</li>
+                <li>BlackRock (2025). 2025 Midyear Investment Outlook.</li>
+                <li>Markowitz, H. (1952). Portfolio Selection. The Journal of Finance, 7(1), 77–91.</li>
+                <li>Sharpe, W. (1966). Mutual Fund Performance. The Journal of Business, 39(1), 119–138.</li>
               </ul>
+
+              <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
+                <T lang={lang} translations={translations}>{translations[lang].realityNoteTitle}</T>
+              </h2>
+              <p className="text-red-600 dark:text-red-400">
+                <T lang={lang} translations={translations}>{translations[lang].realityNoteText}</T>
+              </p>
             </article>
           </div>
         </Container>
