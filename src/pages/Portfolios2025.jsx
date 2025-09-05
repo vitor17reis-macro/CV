@@ -2,10 +2,8 @@
 import React, { useState } from "react";
 import { ArrowLeft, Moon, Sun, Globe } from "lucide-react";
 import T from "../components/T";
-
-const Container = ({ children }) => (
-  <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">{children}</div>
-);
+import { Katex } from 'react-katex';
+import 'katex/dist/katex.min.css';
 
 export default function Portfolios2025() {
   const [lang, setLang] = useState("pt");
@@ -13,21 +11,66 @@ export default function Portfolios2025() {
 
   const translations = {
     pt: {
-      title: "Investimento Conservador com Exposição a Tecnologia, Inteligência Artificial e Criptomoedas",
+      title:
+        "Investimento Conservador com Exposição a Tecnologia, Inteligência Artificial e Criptomoedas: Uma Análise de Cenários a Longo Prazo",
       date: "31/08/2025",
-      intro: "Esta análise comenta a viabilidade de integrar ativos tradicionais de baixo risco com instrumentos de inovação tecnológica e digital em portfólios de investimento com diferentes perfis de risco. São comparados três cenários: um portfólio conservador (Cenário A), um portfólio equilibrado com inclusão moderada de tecnologia e criptomoedas (Cenário B) e um portfólio arriscado com forte exposição a ativos voláteis (Cenário C).",
-      summary: "Resumo",
-      summaryText: "Utilizando dados históricos de rentabilidade e uma simulação de investimento periódico de 500 euros mensais durante 20 anos, este estudo procura evidenciar como a diversificação e o horizonte temporal de longo prazo moldam o equilíbrio entre preservação de capital e potencial de crescimento. Os resultados demonstram que, embora o cenário conservador assegure maior estabilidade, os cenários equilibrado e arriscado oferecem perspetivas de valorização significativamente superiores.",
-      methodology: "Metodologia",
-      methodologyText: "O Cenário A (Conservador) privilegia instrumentos de baixo risco, com 60% em depósitos e obrigações, 10% em ações defensivas, 5% em ações tecnológicas, 10% em liquidez e 15% em ETFs de obrigações globais. O Cenário B (Equilibrado) combina 35% em instrumentos conservadores, 20% em ações tecnológicas, 15% em criptomoedas, 10% em ETFs, 10% em ações defensivas e 10% em liquidez. O Cenário C (Arriscado) aloca 25% em obrigações e depósitos, 30% em tecnologia e IA, 25% em criptomoedas, 10% em ações defensivas, 5% em ETFs e 5% em liquidez.",
-      fig1Caption: "Figura 1: Cenário A (Conservador)",
-      fig2Caption: "Figura 2: Cenário B (Equilibrado)",
-      fig3Caption: "Figura 3: Cenário C (Arriscado)",
-      fig4Caption: "Figura 4: Rentabilidade Média Anual (%)",
-      fig5Caption: "Figura 5: Valor Futuro Acumulado para os Cenários",
-      results: "Resultados",
-      resultsText: "Os cálculos apontam para retornos esperados de 3,58% no Cenário A, 6,35% no Cenário B e 8,33% no Cenário C, traduzindo-se em 175 mil euros (A), 240 mil euros (B) e 305 mil euros (C) após 20 anos. Ajustados por inflação e custos, os valores reais são cerca de 140 mil euros (A), 190 mil euros (B) e 240 mil euros (C). Os rácios de Sharpe são 0,2796 para A, 0,2821 para B e 0,2827 para C.",
-      tableTitle: "Tabela 1: Valor Futuro e Rácio de Sharpe",
+      resumoTitle: "Resumo",
+      resumoText:
+        "Esta análise comenta a viabilidade de integrar ativos tradicionais de baixo risco com instrumentos de inovação tecnológica e digital...",
+      introTitle: "Introdução",
+      introText:
+        "Os portfólios conservadores são tradicionalmente concebidos...",
+      revisaoTitle: "Revisão de Literatura",
+      revisaoText: "A teoria moderna de portfólio, introduzida por Markowitz...",
+      metodologiaTitle: "Metodologia",
+      metodologiaText: "O Cenário A (Conservador), ilustrado na Figura 1...",
+      fig1Caption: "Figura 1 - Cenário A",
+      fig2Caption: "Figura 2 - Cenário B",
+      fig3Caption: "Figura 3 - Cenário C",
+      fig4Caption: "Figura 4 - Rentabilidade Média Anual (%)",
+      volatilidadeTitle: "Volatilidade e Rácio de Sharpe",
+      volatilidadeText: (
+        <>
+          <p>
+            Adicionalmente, calcula-se o rácio de Sharpe para cada cenário,
+            assumindo desvios-padrão históricos: 5,65% para A, 15,42% para B e
+            22,39% para C, com taxa sem risco de 2%. A fórmula do rácio de
+            Sharpe é dada por:
+          </p>
+          <BlockMath>
+            {"\\text{Rácio de Sharpe} = \\frac{R_p - R_f}{\\sigma_p}"}
+          </BlockMath>
+          <p>
+            onde <InlineMath>{"R_p"}</InlineMath> é o retorno esperado do
+            portfólio, <InlineMath>{"R_f"}</InlineMath> é a taxa sem risco e{" "}
+            <InlineMath>{"\\sigma_p"}</InlineMath> é o desvio padrão do
+            portfólio (Sharpe, 1964).
+          </p>
+          <p>
+            Os desvios-padrão históricos foram calculados como médias ponderadas
+            das volatilidades anuais das classes de ativos, assumindo correlações
+            moderadas entre classes. A fórmula aproximada usada é:
+          </p>
+          <BlockMath>{"\\sigma_p \\approx \\sum w_i \\sigma_i"}</BlockMath>
+          <p>
+            onde <InlineMath>{"\\sigma_p"}</InlineMath> é o desvio padrão do
+            portfólio, <InlineMath>{"w_i"}</InlineMath> é o peso do ativo{" "}
+            <InlineMath>{"i"}</InlineMath>, e <InlineMath>{"\\sigma_i"}</InlineMath>{" "}
+            é o desvio padrão do ativo <InlineMath>{"i"}</InlineMath>. A fórmula
+            exata, considerando correlações, é:
+          </p>
+          <BlockMath>
+            {
+              "\\sigma_p = \\sqrt{\\sum w_i^2 \\sigma_i^2 + \\sum \\sum w_i w_j \\sigma_i \\sigma_j \\rho_{ij}}"
+            }
+          </BlockMath>
+        </>
+      ),
+      resultadosTitle: "Resultados",
+      resultadosText:
+        "Os cálculos ponderados apontam para retornos esperados de 3,58%...",
+      fig5Caption: "Figura 5 - Valor Futuro Acumulado",
+      tableTitle: "Tabela 1 - VF e Rácio de Sharpe",
       tableScenario: "Cenário",
       tableFutureValue: "Valor Futuro (€)",
       tableSharpeRatio: "Rácio de Sharpe",
@@ -40,50 +83,18 @@ export default function Portfolios2025() {
       tableRow3Scenario: "C (Arriscado)",
       tableRow3FutureValue: "306 693,60",
       tableRow3SharpeRatio: "0,2827",
-      discussion: "Discussão",
-      discussionText: "O Cenário A privilegia a segurança, mas com rendimentos modestos. O Cenário B equilibra ativos tradicionais e inovadores, aumentando a rentabilidade sem comprometer excessivamente a estabilidade. O Cenário C oferece o maior potencial de valorização, mas com maior volatilidade. Os rácios de Sharpe semelhantes sugerem que a escolha depende do perfil de risco do investidor.",
-      conclusion: "Conclusão",
-      conclusionText: "A diversificação entre ativos tradicionais e inovadores é eficaz para investidores de longo prazo. O Cenário A assegura estabilidade, o Cenário B equilibra segurança e valorização, e o Cenário C maximiza retornos com maior risco. A escolha depende do perfil de risco e objetivos do investidor.",
-      references: "Referências",
-      realityNoteTitle: "Nota de Realidade",
-      realityNoteText: "Estes resultados são projeções simplificadas e não garantem desempenhos futuros. Não incluem impostos, comissões, slippage, custos de reequilíbrio nem tracking error de ETFs. As rentabilidades médias assumem distribuição estável e não capturam risco de sequência de retornos (anos negativos no início reduzem fortemente o valor final). A inflação reduz o poder de compra do montante acumulado. As contribuições mensais presumem execução perfeita no último dia útil e ausência de falhas de disciplina de poupança.",
-      backToAnalyses: "Voltar à página anterior",
-    },
-    en: {
-      title: "Conservative Investment with Exposure to Technology, Artificial Intelligence, and Cryptocurrencies",
-      date: "08/31/2025",
-      intro: "This analysis discusses the feasibility of integrating low-risk traditional assets with technological and digital innovation instruments in investment portfolios with different risk profiles. Three scenarios are compared: a conservative portfolio (Scenario A), a balanced portfolio with moderate inclusion of technology and cryptocurrencies (Scenario B), and a risky portfolio with high exposure to volatile assets (Scenario C).",
-      summary: "Summary",
-      summaryText: "Using historical return data and a simulation of a periodic investment of 500 euros monthly over 20 years, this study aims to demonstrate how diversification and a long-term horizon shape the balance between capital preservation and growth potential. The results show that while the conservative scenario ensures greater stability, the balanced and risky scenarios offer significantly higher appreciation prospects.",
-      methodology: "Methodology",
-      methodologyText: "Scenario A (Conservative) prioritizes low-risk instruments, with 60% in deposits and bonds, 10% in defensive stocks, 5% in technology stocks, 10% in cash, and 15% in global bond ETFs. Scenario B (Balanced) combines 35% in conservative instruments, 20% in technology stocks, 15% in cryptocurrencies, 10% in ETFs, 10% in defensive stocks, and 10% in cash. Scenario C (Risky) allocates 25% to bonds and deposits, 30% to technology and AI, 25% to cryptocurrencies, 10% to defensive stocks, 5% to ETFs, and 5% to cash.",
-      fig1Caption: "Figure 1: Scenario A (Conservative)",
-      fig2Caption: "Figure 2: Scenario B (Balanced)",
-      fig3Caption: "Figure 3: Scenario C (Risky)",
-      fig4Caption: "Figure 4: Average Annual Return (%)",
-      fig5Caption: "Figure 5: Accumulated Future Value for the Scenarios",
-      results: "Results",
-      resultsText: "Calculations indicate expected returns of 3.58% for Scenario A, 6.35% for Scenario B, and 8.33% for Scenario C, translating to 175,000 euros (A), 240,000 euros (B), and 305,000 euros (C) after 20 years. Adjusted for inflation and costs, the real values are approximately 140,000 euros (A), 190,000 euros (B), and 240,000 euros (C). Sharpe ratios are 0.2796 for A, 0.2821 for B, and 0.2827 for C.",
-      tableTitle: "Table 1: Future Value and Sharpe Ratio",
-      tableScenario: "Scenario",
-      tableFutureValue: "Future Value (€)",
-      tableSharpeRatio: "Sharpe Ratio",
-      tableRow1Scenario: "A (Conservative)",
-      tableRow1FutureValue: "174,883.63",
-      tableRow1SharpeRatio: "0.2796",
-      tableRow2Scenario: "B (Balanced)",
-      tableRow2FutureValue: "240,845.61",
-      tableRow2SharpeRatio: "0.2821",
-      tableRow3Scenario: "C (Risky)",
-      tableRow3FutureValue: "306,693.60",
-      tableRow3SharpeRatio: "0.2827",
-      discussion: "Discussion",
-      discussionText: "Scenario A prioritizes safety but yields modest returns. Scenario B balances traditional and innovative assets, enhancing returns without overly compromising stability. Scenario C offers the highest growth potential but with increased volatility. Similar Sharpe ratios suggest that the choice depends on the investor’s risk profile.",
-      conclusion: "Conclusion",
-      conclusionText: "Diversification between traditional and innovative assets is effective for long-term investors. Scenario A ensures stability, Scenario B balances safety and growth, and Scenario C maximizes returns with higher risk. The choice depends on the investor’s risk profile and objectives.",
-      references: "References",
-      realityNoteTitle: "Reality Check",
-      realityNoteText: "These results are simplified projections and do not guarantee future performance. They exclude taxes, fees, slippage, rebalancing costs, and ETF tracking error. Average returns assume stable distributions and do not capture sequence-of-returns risk (early negative years can materially reduce the final balance). Inflation erodes purchasing power. Monthly contributions assume perfect execution on the last business day and no lapses in savings discipline.",
+      discussaoTitle: "Discussão",
+      discussaoText:
+        "Os resultados confirmam que o Cenário A privilegia a segurança...",
+      conclusaoTitle: "Conclusão",
+      conclusaoText:
+        "A análise comparativa dos três cenários de portfólio evidencia...",
+      referencesTitle: "Referências",
+      references:
+        "Sharpe, W. F. (1964). Capital asset prices: A theory of market equilibrium...",
+      notaRealidadeTitle: "Reality Note",
+      notaRealidadeText:
+        "These results are simplified projections and do not guarantee future performances...",
       backToAnalyses: "Return to previous page",
     },
   };
@@ -159,56 +170,63 @@ export default function Portfolios2025() {
                 <T lang={lang} translations={translations}>{translations[lang].date}</T>
               </p>
 
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].intro}</T>
-              </p>
+              <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
+                <T lang={lang} translations={translations}>{translations[lang].resumoTitle}</T>
+              </h2>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].resumoText }} />
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].summary}</T>
+                <T lang={lang} translations={translations}>{translations[lang].introTitle}</T>
               </h2>
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].summaryText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].introText }} />
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].methodology}</T>
+                <T lang={lang} translations={translations}>{translations[lang].revisaoTitle}</T>
               </h2>
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].methodologyText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].revisaoText }} />
+
+              <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
+                <T lang={lang} translations={translations}>{translations[lang].metodologiaTitle}</T>
+              </h2>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].metodologiaText }} />
+
               <figure>
-                <img src="/images/portfolios/fig1.png" alt={translations[lang].fig1Caption} className="my-6 mx-auto rounded-lg shadow-md" />
+                <img src="/images/portfolios/fig1.png" alt={translations[lang].fig1Caption} className="my-6 mx-auto rounded-lg shadow-md max-w-[50%]" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig1Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img src="/images/portfolios/fig2.png" alt={translations[lang].fig2Caption} className="my-6 mx-auto rounded-lg shadow-md" />
+                <img src="/images/portfolios/fig2.png" alt={translations[lang].fig2Caption} className="my-6 mx-auto rounded-lg shadow-md max-w-[50%]" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig2Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img src="/images/portfolios/fig3.png" alt={translations[lang].fig3Caption} className="my-6 mx-auto rounded-lg shadow-md" />
+                <img src="/images/portfolios/fig3.png" alt={translations[lang].fig3Caption} className="my-6 mx-auto rounded-lg shadow-md max-w-[50%]" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig3Caption}</T>
                 </figcaption>
               </figure>
               <figure>
-                <img src="/images/portfolios/fig4.png" alt={translations[lang].fig4Caption} className="my-6 mx-auto rounded-lg shadow-md" />
+                <img src="/images/portfolios/fig4.png" alt={translations[lang].fig4Caption} className="my-6 mx-auto rounded-lg shadow-md max-w-[50%]" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig4Caption}</T>
                 </figcaption>
               </figure>
 
+              <h3 className="text-xl font-semibold italic text-indigo-700 dark:text-indigo-300 mb-4">
+                <T lang={lang} translations={translations}>{translations[lang].volatilidadeTitle}</T>
+              </h3>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].volatilidadeText }} />
+
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].results}</T>
+                <T lang={lang} translations={translations}>{translations[lang].resultadosTitle}</T>
               </h2>
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].resultsText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].resultadosText }} />
+
               <figure>
-                <img src="/images/portfolios/fig5.png" alt={translations[lang].fig5Caption} className="my-6 mx-auto rounded-lg shadow-md" />
+                <img src="/images/portfolios/fig5.png" alt={translations[lang].fig5Caption} className="my-6 mx-auto rounded-lg shadow-md max-w-[50%]" />
                 <figcaption className="text-center text-sm text-neutral-500 dark:text-neutral-400">
                   <T lang={lang} translations={translations}>{translations[lang].fig5Caption}</T>
                 </figcaption>
@@ -248,35 +266,24 @@ export default function Portfolios2025() {
               </table>
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].discussion}</T>
+                <T lang={lang} translations={translations}>{translations[lang].discussaoTitle}</T>
               </h2>
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].discussionText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].discussaoText }} />
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].conclusion}</T>
+                <T lang={lang} translations={translations}>{translations[lang].conclusaoTitle}</T>
               </h2>
-              <p className="mb-6">
-                <T lang={lang} translations={translations}>{translations[lang].conclusionText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].conclusaoText }} />
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].references}</T>
+                <T lang={lang} translations={translations}>{translations[lang].referencesTitle}</T>
               </h2>
-              <ul className="list-disc pl-6 mb-6">
-                <li>Baur, D. G., Hong, K., & Lee, A. D. (2018). Bitcoin: Medium of exchange or speculative assets? Journal of International Financial Markets, Institutions and Money, 54, 177–189.</li>
-                <li>BlackRock (2025). 2025 Midyear Investment Outlook.</li>
-                <li>Markowitz, H. (1952). Portfolio Selection. The Journal of Finance, 7(1), 77–91.</li>
-                <li>Sharpe, W. (1966). Mutual Fund Performance. The Journal of Business, 39(1), 119–138.</li>
-              </ul>
+              <div className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].references }} />
 
               <h2 className="text-2xl font-semibold text-indigo-700 dark:text-indigo-300 mt-10 mb-4">
-                <T lang={lang} translations={translations}>{translations[lang].realityNoteTitle}</T>
+                <T lang={lang} translations={translations}>{translations[lang].notaRealidadeTitle}</T>
               </h2>
-              <p className="text-red-600 dark:text-red-400">
-                <T lang={lang} translations={translations}>{translations[lang].realityNoteText}</T>
-              </p>
+              <p className="mb-6" dangerouslySetInnerHTML={{ __html: translations[lang].notaRealidadeText }} />
             </article>
           </div>
         </Container>
